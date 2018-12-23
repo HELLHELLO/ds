@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ds.mapper.ConsultItemMapper">
+  <resultMap id="BaseResultMap" type="ds.pojo.ConsultItem">
+    <id column="consult_id" jdbcType="BIGINT" property="consultId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="brand_id" jdbcType="BIGINT" property="brandId" />
+    <result column="cid" jdbcType="BIGINT" property="cid" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="valued" jdbcType="BIT" property="valued" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="expert_id" jdbcType="BIGINT" property="expertId" />
+    <result column="items_id" jdbcType="BIGINT" property="itemsId" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.ConsultItemWithBLOBs">
+    <result column="item_desc" jdbcType="LONGVARCHAR" property="itemDesc" />
+    <result column="consult_tx" jdbcType="LONGVARCHAR" property="consultTx" />
+    <result column="respose_tx" jdbcType="LONGVARCHAR" property="resposeTx" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    consult_id, shop_id, shop_name, brand_id, cid, brand_name, image, valued, user_id, 
+    expert_id, items_id, created, updated
+  </sql>
+  <sql id="Blob_Column_List">
+    item_desc, consult_tx, respose_tx
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="ds.pojo.ConsultItemExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from consult_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="ds.pojo.ConsultItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consult_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from consult_item
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from consult_item
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="ds.pojo.ConsultItemExample">
+    delete from consult_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ds.pojo.ConsultItemWithBLOBs">
+    insert into consult_item (consult_id, shop_id, shop_name, 
+      brand_id, cid, brand_name, 
+      image, valued, user_id, expert_id, 
+      items_id, created, updated, 
+      item_desc, consult_tx, respose_tx
+      )
+    values (#{consultId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, 
+      #{brandId,jdbcType=BIGINT}, #{cid,jdbcType=BIGINT}, #{brandName,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{valued,jdbcType=BIT}, #{userId,jdbcType=BIGINT}, #{expertId,jdbcType=BIGINT}, 
+      #{itemsId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{itemDesc,jdbcType=LONGVARCHAR}, #{consultTx,jdbcType=LONGVARCHAR}, #{resposeTx,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ds.pojo.ConsultItemWithBLOBs">
+    insert into consult_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="consultId != null">
+        consult_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="valued != null">
+        valued,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="expertId != null">
+        expert_id,
+      </if>
+      <if test="itemsId != null">
+        items_id,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="itemDesc != null">
+        item_desc,
+      </if>
+      <if test="consultTx != null">
+        consult_tx,
+      </if>
+      <if test="resposeTx != null">
+        respose_tx,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="consultId != null">
+        #{consultId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=BIGINT},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="expertId != null">
+        #{expertId,jdbcType=BIGINT},
+      </if>
+      <if test="itemsId != null">
+        #{itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDesc != null">
+        #{itemDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="consultTx != null">
+        #{consultTx,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resposeTx != null">
+        #{resposeTx,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ds.pojo.ConsultItemExample" resultType="java.lang.Long">
+    select count(*) from consult_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update consult_item
+    <set>
+      <if test="record.consultId != null">
+        consult_id = #{record.consultId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandId != null">
+        brand_id = #{record.brandId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=BIGINT},
+      </if>
+      <if test="record.brandName != null">
+        brand_name = #{record.brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expertId != null">
+        expert_id = #{record.expertId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemsId != null">
+        items_id = #{record.itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemDesc != null">
+        item_desc = #{record.itemDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.consultTx != null">
+        consult_tx = #{record.consultTx,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.resposeTx != null">
+        respose_tx = #{record.resposeTx,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update consult_item
+    set consult_id = #{record.consultId,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      brand_id = #{record.brandId,jdbcType=BIGINT},
+      cid = #{record.cid,jdbcType=BIGINT},
+      brand_name = #{record.brandName,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      valued = #{record.valued,jdbcType=BIT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      expert_id = #{record.expertId,jdbcType=BIGINT},
+      items_id = #{record.itemsId,jdbcType=BIGINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      item_desc = #{record.itemDesc,jdbcType=LONGVARCHAR},
+      consult_tx = #{record.consultTx,jdbcType=LONGVARCHAR},
+      respose_tx = #{record.resposeTx,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update consult_item
+    set consult_id = #{record.consultId,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      brand_id = #{record.brandId,jdbcType=BIGINT},
+      cid = #{record.cid,jdbcType=BIGINT},
+      brand_name = #{record.brandName,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      valued = #{record.valued,jdbcType=BIT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      expert_id = #{record.expertId,jdbcType=BIGINT},
+      items_id = #{record.itemsId,jdbcType=BIGINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ds.pojo.ConsultItemWithBLOBs">
+    update consult_item
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=BIGINT},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="expertId != null">
+        expert_id = #{expertId,jdbcType=BIGINT},
+      </if>
+      <if test="itemsId != null">
+        items_id = #{itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDesc != null">
+        item_desc = #{itemDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="consultTx != null">
+        consult_tx = #{consultTx,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resposeTx != null">
+        respose_tx = #{resposeTx,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="ds.pojo.ConsultItemWithBLOBs">
+    update consult_item
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=BIGINT},
+      cid = #{cid,jdbcType=BIGINT},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      valued = #{valued,jdbcType=BIT},
+      user_id = #{userId,jdbcType=BIGINT},
+      expert_id = #{expertId,jdbcType=BIGINT},
+      items_id = #{itemsId,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      item_desc = #{itemDesc,jdbcType=LONGVARCHAR},
+      consult_tx = #{consultTx,jdbcType=LONGVARCHAR},
+      respose_tx = #{resposeTx,jdbcType=LONGVARCHAR}
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ds.pojo.ConsultItem">
+    update consult_item
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=BIGINT},
+      cid = #{cid,jdbcType=BIGINT},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      valued = #{valued,jdbcType=BIT},
+      user_id = #{userId,jdbcType=BIGINT},
+      expert_id = #{expertId,jdbcType=BIGINT},
+      items_id = #{itemsId,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </update>
+</mapper>
