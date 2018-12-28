@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import ds.common.pojo.DataGridResult;
 import ds.mapper.ItemsMapper;
+import ds.pageHelperTools.GetSelectResult;
 import ds.pojo.Items;
 import ds.pojo.ItemsExample;
 import ds.service.ItemsService;
@@ -32,11 +33,13 @@ public class ItemServiceImpl implements ItemsService {
     @Override
     public DataGridResult getItemsList(long page, long rows) {
         ItemsExample itemsExample=new ItemsExample();
-        PageHelper.startPage((int)page,(int)rows);
+        DataGridResult result=new GetSelectResult<ItemsMapper,ItemsExample,Items>((int)page,(int)rows,itemsMapper,itemsExample).getResult();
+        return result;
+        /*PageHelper.startPage((int)page,(int)rows);
         List<Items> list=itemsMapper.selectByExample(itemsExample);
         PageInfo<Items> pageInfo=new PageInfo<>(list);
         long total=pageInfo.getTotal();
         DataGridResult result=new DataGridResult(total,list);
-        return result;
+        return result;*/
     }
 }
