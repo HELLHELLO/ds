@@ -22,6 +22,7 @@ public class ItemServiceImpl implements ItemsService {
         ItemsExample itemsExample=new ItemsExample();
         ItemsExample.Criteria criteria=itemsExample.createCriteria();
         criteria.andBrandIdEqualTo(itemsId);
+        criteria.andValuedEqualTo(true);
         List<Items> result=itemsMapper.selectByExample(itemsExample);
         if(result!=null&&result.size()>0){
             Items items=result.get(0);
@@ -33,6 +34,7 @@ public class ItemServiceImpl implements ItemsService {
     @Override
     public DataGridResult getItemsList(long page, long rows) {
         ItemsExample itemsExample=new ItemsExample();
+        itemsExample.createCriteria().andValuedEqualTo(true);
         DataGridResult result=new GetSelectResult<ItemsMapper,ItemsExample,Items>((int)page,(int)rows,itemsMapper,itemsExample).getResult();
         return result;
         /*PageHelper.startPage((int)page,(int)rows);

@@ -22,6 +22,7 @@ public class UserListServiceImpl implements UserListService {
         UserExample userExample=new UserExample();
         UserExample.Criteria criteria=userExample.createCriteria();
         criteria.andUserIdEqualTo(id);
+        criteria.andValuedEqualTo(true);
         DataGridResult result=new GetSelectResult<UserMapper,UserExample,User>((int)page,(int)rows,userMapper,userExample).getResult();//获取查询结果，因为pageHelper的大部分设置具有重复性所以我放到单独的类里做了
         return result;
         /* PageHelper.startPage((int)page,(int)rows);
@@ -35,6 +36,7 @@ public class UserListServiceImpl implements UserListService {
     @Override
     public DataGridResult getUserList(long page, long rows) {
         UserExample userExample=new UserExample();
+        userExample.createCriteria().andValuedEqualTo(true);
         DataGridResult result=new GetSelectResult<UserMapper,UserExample,User>((int)page,(int)rows,userMapper,userExample).getResult();
         return result;
     }

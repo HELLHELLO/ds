@@ -22,6 +22,7 @@ public class ItemForItemsServiceImpl implements ItemForItemsService{
         ItemForItemsExample itemForItemsExample=new ItemForItemsExample();
         ItemForItemsExample.Criteria criteria=itemForItemsExample.createCriteria();
         criteria.andItemsIdEqualTo(id);
+        criteria.andValuedEqualTo(true);
         PageHelper.startPage((int)page,(int)rows);
         List<ItemForItems> list=itemForItemsMapper.selectByExample(itemForItemsExample);
         PageInfo<ItemForItems> pageInfo=new PageInfo<>(list);

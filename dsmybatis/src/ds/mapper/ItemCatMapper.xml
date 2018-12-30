@@ -14,7 +14,7 @@
     <result column="pic_id" jdbcType="VARCHAR" property="picId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.ItemCat">
-    <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
+    <result column="cat_desc" jdbcType="LONGVARCHAR" property="catDesc" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -79,7 +79,7 @@
     pic_id
   </sql>
   <sql id="Blob_Column_List">
-    desc
+    cat_desc
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="ds.pojo.ItemCatExample" resultMap="ResultMapWithBLOBs">
     select
@@ -133,11 +133,11 @@
     insert into ds_item_cat (cat_id, parent_id, name, 
       status, sort_order, is_parent, 
       created, updated, valued, 
-      pic_id, desc)
+      pic_id, cat_desc)
     values (#{catId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
       #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{valued,jdbcType=BIT}, 
-      #{picId,jdbcType=VARCHAR}, #{desc,jdbcType=LONGVARCHAR})
+      #{picId,jdbcType=VARCHAR}, #{catDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.ItemCat">
     insert into ds_item_cat
@@ -172,8 +172,8 @@
       <if test="picId != null">
         pic_id,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="catDesc != null">
+        cat_desc,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -207,8 +207,8 @@
       <if test="picId != null">
         #{picId,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=LONGVARCHAR},
+      <if test="catDesc != null">
+        #{catDesc,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -251,8 +251,8 @@
       <if test="record.picId != null">
         pic_id = #{record.picId,jdbcType=VARCHAR},
       </if>
-      <if test="record.desc != null">
-        desc = #{record.desc,jdbcType=LONGVARCHAR},
+      <if test="record.catDesc != null">
+        cat_desc = #{record.catDesc,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -271,7 +271,7 @@
       updated = #{record.updated,jdbcType=TIMESTAMP},
       valued = #{record.valued,jdbcType=BIT},
       pic_id = #{record.picId,jdbcType=VARCHAR},
-      desc = #{record.desc,jdbcType=LONGVARCHAR}
+      cat_desc = #{record.catDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,8 +322,8 @@
       <if test="picId != null">
         pic_id = #{picId,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=LONGVARCHAR},
+      <if test="catDesc != null">
+        cat_desc = #{catDesc,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where cat_id = #{catId,jdbcType=BIGINT}
@@ -339,7 +339,7 @@
       updated = #{updated,jdbcType=TIMESTAMP},
       valued = #{valued,jdbcType=BIT},
       pic_id = #{picId,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=LONGVARCHAR}
+      cat_desc = #{catDesc,jdbcType=LONGVARCHAR}
     where cat_id = #{catId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="ds.pojo.ItemCat">

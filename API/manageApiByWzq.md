@@ -9,7 +9,7 @@
 请求实例  
 `http://localhost:8080/items/list?page=1&rows=30`  
 请求返回值  
-```
+```JSON
 {
   "total": 1,
   "rows": [
@@ -44,7 +44,7 @@
 请求实例  
 `http://localhost:8080/stuItem/1?page=1&rows=30`  
 请求返回值  
-```
+```json
 {
   "total": 1,
   "rows": [
@@ -68,7 +68,7 @@
 ```
 没有参数校验，不会错误
 
-
+## 用户查询
 
 ##### 3.获取用户列表
 
@@ -98,3 +98,104 @@
 
 没有参数校验，不会错误。
 
+## 商品分类相关
+
+##### 5 获取商品分类信息
+
+接口地址 /Cats/list
+
+请求参数：无
+
+请求方法：get
+
+请求实例：```http://localhost:8080/Cats/list```
+
+请求返回值：
+
+```json
+  {
+    "cat": {
+      "catId": 1,
+      "parentId": 0,
+      "name": "水产品",
+      "status": 1,
+      "sortOrder": null,
+      "isParent": true,
+      "created": 1546156550000,
+      "updated": 1546156550000,
+      "valued": true,
+      "picId": "1",
+      "catDesc": null
+    },
+    "children": [
+      {
+        "cat": {
+          "catId": 3,
+          "parentId": 1,
+          "name": "鱼",
+          "status": 1,
+          "sortOrder": null,
+          "isParent": true,
+          "created": 1546156550000,
+          "updated": 1546156550000,
+          "valued": true,
+          "picId": "3",
+          "catDesc": null
+        },
+        "children": [
+          {
+            "cat": {
+              "catId": 5,
+              "parentId": 3,
+              "name": "淡水鱼",
+              "status": 1,
+              "sortOrder": null,
+              "isParent": false,
+              "created": 1546156550000,
+              "updated": 1546156550000,
+              "valued": true,
+              "picId": "4",
+              "catDesc": null
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "cat": {
+          "catId": 4,
+          "parentId": 1,
+          "name": "虾",
+          "status": 1,
+          "sortOrder": null,
+          "isParent": true,
+          "created": 1546156550000,
+          "updated": 1546156550000,
+          "valued": true,
+          "picId": "3",
+          "catDesc": null
+        },
+        "children": []
+      }
+    ]
+  },
+  {
+    "cat": {
+      "catId": 2,
+      "parentId": 0,
+      "name": "谷物",
+      "status": 1,
+      "sortOrder": null,
+      "isParent": true,
+      "created": 1546156550000,
+      "updated": 1546156550000,
+      "valued": true,
+      "picId": "2",
+      "catDesc": null
+    },
+    "children": []
+  }
+]
+```
+
+没有参数校验，不会错误

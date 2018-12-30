@@ -23,7 +23,7 @@ public class ItemCat {
 
     private String picId;
 
-    private String desc;
+    private String catDesc;
 
     public Long getCatId() {
         return catId;
@@ -105,11 +105,11 @@ public class ItemCat {
         this.picId = picId == null ? null : picId.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getCatDesc() {
+        return catDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setCatDesc(String catDesc) {
+        this.catDesc = catDesc == null ? null : catDesc.trim();
     }
 }
