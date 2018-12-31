@@ -19,6 +19,8 @@ public class ItemPic {
 
     private Boolean valued;
 
+    private String userId;
+
     public Long getPicId() {
         return picId;
     }
@@ -81,5 +83,13 @@ public class ItemPic {
 
     public void setValued(Boolean valued) {
         this.valued = valued;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 }

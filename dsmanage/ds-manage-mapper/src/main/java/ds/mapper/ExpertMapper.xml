@@ -100,17 +100,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.Expert">
-    insert into expert (expert, name_, category, 
-      fee, valued)
-    values (#{expert,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
-      #{fee,jdbcType=BIGINT}, #{valued,jdbcType=BIT})
+    <selectKey keyProperty="expert" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into expert (name_, category, fee, 
+      valued)
+    values (#{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{fee,jdbcType=BIGINT}, 
+      #{valued,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Expert">
+    <selectKey keyProperty="expert" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into expert
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="expert != null">
-        expert,
-      </if>
       <if test="name != null">
         name_,
       </if>
@@ -125,9 +128,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="expert != null">
-        #{expert,jdbcType=BIGINT},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>

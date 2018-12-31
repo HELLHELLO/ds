@@ -109,23 +109,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.ItemForItems">
-    insert into ds_item_for_items (item_id, items_id, title, 
-      paramter, price, num, 
-      barcode, image, cid, 
-      status, created, updated, 
-      valued)
-    values (#{itemId,jdbcType=BIGINT}, #{itemsId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
-      #{paramter,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{num,jdbcType=INTEGER}, 
-      #{barcode,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{cid,jdbcType=BIGINT}, 
-      #{status,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{valued,jdbcType=BIT})
+    <selectKey keyProperty="itemId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_item_for_items (items_id, title, paramter, 
+      price, num, barcode, 
+      image, cid, status, 
+      created, updated, valued
+      )
+    values (#{itemsId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{paramter,jdbcType=VARCHAR}, 
+      #{price,jdbcType=BIGINT}, #{num,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{cid,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{valued,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.ItemForItems">
+    <selectKey keyProperty="itemId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into ds_item_for_items
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="itemId != null">
-        item_id,
-      </if>
       <if test="itemsId != null">
         items_id,
       </if>
@@ -164,9 +167,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="itemId != null">
-        #{itemId,jdbcType=BIGINT},
-      </if>
       <if test="itemsId != null">
         #{itemsId,jdbcType=BIGINT},
       </if>

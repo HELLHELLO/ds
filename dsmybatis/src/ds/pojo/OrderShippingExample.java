@@ -105,73 +105,63 @@ public class OrderShippingExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andOrderIdIsNull() {
-            addCriterion("order_id is null");
+        public Criteria andShippingIdIsNull() {
+            addCriterion("shipping_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdIsNotNull() {
-            addCriterion("order_id is not null");
+        public Criteria andShippingIdIsNotNull() {
+            addCriterion("shipping_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdEqualTo(String value) {
-            addCriterion("order_id =", value, "orderId");
+        public Criteria andShippingIdEqualTo(Long value) {
+            addCriterion("shipping_id =", value, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdNotEqualTo(String value) {
-            addCriterion("order_id <>", value, "orderId");
+        public Criteria andShippingIdNotEqualTo(Long value) {
+            addCriterion("shipping_id <>", value, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdGreaterThan(String value) {
-            addCriterion("order_id >", value, "orderId");
+        public Criteria andShippingIdGreaterThan(Long value) {
+            addCriterion("shipping_id >", value, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdGreaterThanOrEqualTo(String value) {
-            addCriterion("order_id >=", value, "orderId");
+        public Criteria andShippingIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("shipping_id >=", value, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdLessThan(String value) {
-            addCriterion("order_id <", value, "orderId");
+        public Criteria andShippingIdLessThan(Long value) {
+            addCriterion("shipping_id <", value, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdLessThanOrEqualTo(String value) {
-            addCriterion("order_id <=", value, "orderId");
+        public Criteria andShippingIdLessThanOrEqualTo(Long value) {
+            addCriterion("shipping_id <=", value, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdLike(String value) {
-            addCriterion("order_id like", value, "orderId");
+        public Criteria andShippingIdIn(List<Long> values) {
+            addCriterion("shipping_id in", values, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdNotLike(String value) {
-            addCriterion("order_id not like", value, "orderId");
+        public Criteria andShippingIdNotIn(List<Long> values) {
+            addCriterion("shipping_id not in", values, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdIn(List<String> values) {
-            addCriterion("order_id in", values, "orderId");
+        public Criteria andShippingIdBetween(Long value1, Long value2) {
+            addCriterion("shipping_id between", value1, value2, "shippingId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIdNotIn(List<String> values) {
-            addCriterion("order_id not in", values, "orderId");
-            return (Criteria) this;
-        }
-
-        public Criteria andOrderIdBetween(String value1, String value2) {
-            addCriterion("order_id between", value1, value2, "orderId");
-            return (Criteria) this;
-        }
-
-        public Criteria andOrderIdNotBetween(String value1, String value2) {
-            addCriterion("order_id not between", value1, value2, "orderId");
+        public Criteria andShippingIdNotBetween(Long value1, Long value2) {
+            addCriterion("shipping_id not between", value1, value2, "shippingId");
             return (Criteria) this;
         }
 

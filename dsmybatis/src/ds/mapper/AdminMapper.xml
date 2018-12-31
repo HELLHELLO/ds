@@ -98,17 +98,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.Admin">
-    insert into ds_admin (admin_id, admin_name, admin_password
-      )
-    values (#{adminId,jdbcType=BIGINT}, #{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}
-      )
+    <selectKey keyProperty="adminId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_admin (admin_name, admin_password)
+    values (#{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Admin">
+    <selectKey keyProperty="adminId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into ds_admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="adminId != null">
-        admin_id,
-      </if>
       <if test="adminName != null">
         admin_name,
       </if>
@@ -117,9 +118,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="adminId != null">
-        #{adminId,jdbcType=BIGINT},
-      </if>
       <if test="adminName != null">
         #{adminName,jdbcType=VARCHAR},
       </if>

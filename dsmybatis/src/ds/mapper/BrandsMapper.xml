@@ -102,19 +102,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.Brands">
-    insert into ds_brands (brand_id, brand_name, brand_image, 
-      brand_dec, brand_url, valued, 
-      updated)
-    values (#{brandId,jdbcType=BIGINT}, #{brandName,jdbcType=VARCHAR}, #{brandImage,jdbcType=VARCHAR}, 
-      #{brandDec,jdbcType=VARCHAR}, #{brandUrl,jdbcType=VARCHAR}, #{valued,jdbcType=BIT}, 
-      #{updated,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="brandId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_brands (brand_name, brand_image, brand_dec, 
+      brand_url, valued, updated
+      )
+    values (#{brandName,jdbcType=VARCHAR}, #{brandImage,jdbcType=VARCHAR}, #{brandDec,jdbcType=VARCHAR}, 
+      #{brandUrl,jdbcType=VARCHAR}, #{valued,jdbcType=BIT}, #{updated,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Brands">
+    <selectKey keyProperty="brandId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into ds_brands
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="brandId != null">
-        brand_id,
-      </if>
       <if test="brandName != null">
         brand_name,
       </if>
@@ -135,9 +138,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="brandId != null">
-        #{brandId,jdbcType=BIGINT},
-      </if>
       <if test="brandName != null">
         #{brandName,jdbcType=VARCHAR},
       </if>

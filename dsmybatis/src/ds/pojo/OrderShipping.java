@@ -3,7 +3,7 @@ package ds.pojo;
 import java.util.Date;
 
 public class OrderShipping {
-    private String orderId;
+    private Long shippingId;
 
     private String receiverName;
 
@@ -25,12 +25,12 @@ public class OrderShipping {
 
     private Date updated;
 
-    public String getOrderId() {
-        return orderId;
+    public Long getShippingId() {
+        return shippingId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
+    public void setShippingId(Long shippingId) {
+        this.shippingId = shippingId;
     }
 
     public String getReceiverName() {

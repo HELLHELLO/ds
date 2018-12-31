@@ -10,6 +10,7 @@
     <result column="pic_master" jdbcType="BIT" property="picMaster" />
     <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
     <result column="valued" jdbcType="BIT" property="valued" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    pic_id, items_id, pic_dec, pic_url, pic_statu, pic_master, modified_time, valued
+    pic_id, items_id, pic_dec, pic_url, pic_statu, pic_master, modified_time, valued, 
+    user_id
   </sql>
   <select id="selectByExample" parameterType="ds.pojo.ItemPicExample" resultMap="BaseResultMap">
     select
@@ -103,19 +105,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.ItemPic">
-    insert into ds_item_pic (pic_id, items_id, pic_dec, 
-      pic_url, pic_statu, pic_master, 
-      modified_time, valued)
-    values (#{picId,jdbcType=BIGINT}, #{itemsId,jdbcType=BIGINT}, #{picDec,jdbcType=VARCHAR}, 
-      #{picUrl,jdbcType=VARCHAR}, #{picStatu,jdbcType=BIT}, #{picMaster,jdbcType=BIT}, 
-      #{modifiedTime,jdbcType=TIMESTAMP}, #{valued,jdbcType=BIT})
+    <selectKey keyProperty="picId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_item_pic (items_id, pic_dec, pic_url, 
+      pic_statu, pic_master, modified_time, 
+      valued, user_id)
+    values (#{itemsId,jdbcType=BIGINT}, #{picDec,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{picStatu,jdbcType=BIT}, #{picMaster,jdbcType=BIT}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{valued,jdbcType=BIT}, #{userId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.ItemPic">
+    <selectKey keyProperty="picId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into ds_item_pic
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="picId != null">
-        pic_id,
-      </if>
       <if test="itemsId != null">
         items_id,
       </if>
@@ -137,11 +142,11 @@
       <if test="valued != null">
         valued,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="picId != null">
-        #{picId,jdbcType=BIGINT},
-      </if>
       <if test="itemsId != null">
         #{itemsId,jdbcType=BIGINT},
       </if>
@@ -162,6 +167,9 @@
       </if>
       <if test="valued != null">
         #{valued,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +206,9 @@
       <if test="record.valued != null">
         valued = #{record.valued,jdbcType=BIT},
       </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +223,8 @@
       pic_statu = #{record.picStatu,jdbcType=BIT},
       pic_master = #{record.picMaster,jdbcType=BIT},
       modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
-      valued = #{record.valued,jdbcType=BIT}
+      valued = #{record.valued,jdbcType=BIT},
+      user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +253,9 @@
       <if test="valued != null">
         valued = #{valued,jdbcType=BIT},
       </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
     </set>
     where pic_id = #{picId,jdbcType=BIGINT}
   </update>
@@ -252,7 +267,8 @@
       pic_statu = #{picStatu,jdbcType=BIT},
       pic_master = #{picMaster,jdbcType=BIT},
       modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
-      valued = #{valued,jdbcType=BIT}
+      valued = #{valued,jdbcType=BIT},
+      user_id = #{userId,jdbcType=VARCHAR}
     where pic_id = #{picId,jdbcType=BIGINT}
   </update>
 </mapper>

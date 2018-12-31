@@ -131,23 +131,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.TraceMng">
-    insert into trace_mng (mng_id, mng_name, trace_id, 
-      item_cat_id, items_id, item_id, 
-      shop_id, created, updated, 
-      verifed, valued, data_
-      )
-    values (#{mngId,jdbcType=BIGINT}, #{mngName,jdbcType=VARCHAR}, #{traceId,jdbcType=BIGINT}, 
-      #{itemCatId,jdbcType=BIGINT}, #{itemsId,jdbcType=BIGINT}, #{itemId,jdbcType=BIGINT}, 
-      #{shopId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{verifed,jdbcType=TINYINT}, #{valued,jdbcType=BIT}, #{data,jdbcType=LONGVARCHAR}
-      )
+    <selectKey keyProperty="mngId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into trace_mng (mng_name, trace_id, item_cat_id, 
+      items_id, item_id, shop_id, 
+      created, updated, verifed, 
+      valued, data_)
+    values (#{mngName,jdbcType=VARCHAR}, #{traceId,jdbcType=BIGINT}, #{itemCatId,jdbcType=BIGINT}, 
+      #{itemsId,jdbcType=BIGINT}, #{itemId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{verifed,jdbcType=TINYINT}, 
+      #{valued,jdbcType=BIT}, #{data,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.TraceMng">
+    <selectKey keyProperty="mngId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into trace_mng
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="mngId != null">
-        mng_id,
-      </if>
       <if test="mngName != null">
         mng_name,
       </if>
@@ -183,9 +184,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="mngId != null">
-        #{mngId,jdbcType=BIGINT},
-      </if>
       <if test="mngName != null">
         #{mngName,jdbcType=VARCHAR},
       </if>

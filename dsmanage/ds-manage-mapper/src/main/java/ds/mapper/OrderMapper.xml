@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ds.mapper.OrderMapper">
   <resultMap id="BaseResultMap" type="ds.pojo.Order">
-    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <id column="order_id" jdbcType="BIGINT" property="orderId" />
     <result column="payment" jdbcType="VARCHAR" property="payment" />
     <result column="payment_type" jdbcType="INTEGER" property="paymentType" />
     <result column="post_fee" jdbcType="VARCHAR" property="postFee" />
@@ -96,15 +96,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ds_order
-    where order_id = #{orderId,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ds_order
-    where order_id = #{orderId,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="ds.pojo.OrderExample">
     delete from ds_order
@@ -113,25 +113,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.Order">
-    insert into ds_order (order_id, payment, payment_type, 
-      post_fee, status, create_time, 
-      update_time, payment_time, consign_time, 
-      end_time, close_time, shipping_name, 
-      shipping_code, user_id, buyer_message, 
-      buyer_nick)
-    values (#{orderId,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR}, #{paymentType,jdbcType=INTEGER}, 
-      #{postFee,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{paymentTime,jdbcType=TIMESTAMP}, #{consignTime,jdbcType=TIMESTAMP}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, #{shippingName,jdbcType=VARCHAR}, 
-      #{shippingCode,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{buyerMessage,jdbcType=VARCHAR}, 
-      #{buyerNick,jdbcType=VARCHAR})
+    <selectKey keyProperty="orderId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_order (payment, payment_type, post_fee, 
+      status, create_time, update_time, 
+      payment_time, consign_time, end_time, 
+      close_time, shipping_name, shipping_code, 
+      user_id, buyer_message, buyer_nick
+      )
+    values (#{payment,jdbcType=VARCHAR}, #{paymentType,jdbcType=INTEGER}, #{postFee,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{paymentTime,jdbcType=TIMESTAMP}, #{consignTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{closeTime,jdbcType=TIMESTAMP}, #{shippingName,jdbcType=VARCHAR}, #{shippingCode,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{buyerMessage,jdbcType=VARCHAR}, #{buyerNick,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Order">
+    <selectKey keyProperty="orderId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into ds_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="orderId != null">
-        order_id,
-      </if>
       <if test="payment != null">
         payment,
       </if>
@@ -179,9 +182,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="orderId != null">
-        #{orderId,jdbcType=VARCHAR},
-      </if>
       <if test="payment != null">
         #{payment,jdbcType=VARCHAR},
       </if>
@@ -239,7 +239,7 @@
     update ds_order
     <set>
       <if test="record.orderId != null">
-        order_id = #{record.orderId,jdbcType=VARCHAR},
+        order_id = #{record.orderId,jdbcType=BIGINT},
       </if>
       <if test="record.payment != null">
         payment = #{record.payment,jdbcType=VARCHAR},
@@ -293,7 +293,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update ds_order
-    set order_id = #{record.orderId,jdbcType=VARCHAR},
+    set order_id = #{record.orderId,jdbcType=BIGINT},
       payment = #{record.payment,jdbcType=VARCHAR},
       payment_type = #{record.paymentType,jdbcType=INTEGER},
       post_fee = #{record.postFee,jdbcType=VARCHAR},
@@ -362,7 +362,7 @@
         buyer_nick = #{buyerNick,jdbcType=VARCHAR},
       </if>
     </set>
-    where order_id = #{orderId,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="ds.pojo.Order">
     update ds_order
@@ -381,6 +381,6 @@
       user_id = #{userId,jdbcType=BIGINT},
       buyer_message = #{buyerMessage,jdbcType=VARCHAR},
       buyer_nick = #{buyerNick,jdbcType=VARCHAR}
-    where order_id = #{orderId,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=BIGINT}
   </update>
 </mapper>

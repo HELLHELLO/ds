@@ -51,23 +51,59 @@
 
 
         <!-- 指定数据库表 -->
-        <table schema="" tableName="ds_brands" domainObjectName="Brands"></table>
-        <table schema="" tableName="ds_cart" domainObjectName="Cart"></table>
-        <table schema="" tableName="ds_item_cat" domainObjectName="ItemCat"></table>
-        <table tableName="ds_item_for_items" schema="" domainObjectName="ItemForItems"></table>
-        <table tableName="ds_item_pic" schema="" domainObjectName="ItemPic"></table>
-        <table tableName="ds_item_trace" schema="" domainObjectName="ItemTrace"></table>
-        <table tableName="ds_items" schema="" domainObjectName="Items"></table>
-        <table tableName="ds_order" schema="" domainObjectName="Order"></table>
-        <table tableName="ds_order_shipping" schema="" domainObjectName="OrderShipping"></table>
-        <table tableName="ds_user" schema="" domainObjectName="User"></table>
-        <table tableName="ds_user_address" schema="" domainObjectName="UserAddress"></table>
-        <table tableName="ds_user_comuser" schema="" domainObjectName="UserComuser"></table>
-        <table tableName="ds_user_shop" schema="" domainObjectName="UserShop"></table>
-        <table tableName="ds_order_item" schema="" domainObjectName="OrderItem"></table>
-        <table tableName="consult_item" schema="" domainObjectName="ConsultItem"/>
-        <table tableName="ds_admin" schema="" domainObjectName="Admin"/>
-        <table tableName="expert" schema="" domainObjectName="Expert" />
-        <table tableName="trace_mng" schema="" domainObjectName="TraceMng"/>
+        <table schema="" tableName="ds_brands" domainObjectName="Brands">
+            <generatedKey column="brand_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table schema="" tableName="ds_cart" domainObjectName="Cart">
+            <generatedKey column="cart_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table schema="" tableName="ds_item_cat" domainObjectName="ItemCat">
+            <generatedKey column="cat_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_item_for_items" schema="" domainObjectName="ItemForItems">
+            <generatedKey column="item_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_item_pic" schema="" domainObjectName="ItemPic">
+            <generatedKey column="pic_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_item_trace" schema="" domainObjectName="ItemTrace">
+            <generatedKey column="trace_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_items" schema="" domainObjectName="Items">
+            <generatedKey column="items_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_order" schema="" domainObjectName="Order">
+            <generatedKey column="order_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_order_shipping" schema="" domainObjectName="OrderShipping">
+            <generatedKey column="shipping_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_user" schema="" domainObjectName="User">
+            <generatedKey column="user_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_user_address" schema="" domainObjectName="UserAddress">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_user_comuser" schema="" domainObjectName="UserComuser">
+            <generatedKey column="comuser_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_user_shop" schema="" domainObjectName="UserShop">
+            <generatedKey column="shop_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_order_item" schema="" domainObjectName="OrderItem">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="consult_item" schema="" domainObjectName="ConsultItem">
+            <generatedKey column="consult_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_admin" schema="" domainObjectName="Admin">
+            <generatedKey column="admin_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="expert" schema="" domainObjectName="Expert" >
+            <generatedKey column="expert" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="trace_mng" schema="" domainObjectName="TraceMng">
+            <generatedKey column="mng_id" sqlStatement="mysql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

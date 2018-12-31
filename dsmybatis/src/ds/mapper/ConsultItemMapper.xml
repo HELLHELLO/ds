@@ -135,25 +135,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="ds.pojo.ConsultItemWithBLOBs">
-    insert into consult_item (consult_id, shop_id, shop_name, 
-      brand_id, cid, brand_name, 
-      image, valued, user_id, expert_id, 
+    <selectKey keyProperty="consultId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into consult_item (shop_id, shop_name, brand_id, 
+      cid, brand_name, image, 
+      valued, user_id, expert_id, 
       items_id, created, updated, 
       item_desc, consult_tx, respose_tx
       )
-    values (#{consultId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, 
-      #{brandId,jdbcType=BIGINT}, #{cid,jdbcType=BIGINT}, #{brandName,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{valued,jdbcType=BIT}, #{userId,jdbcType=BIGINT}, #{expertId,jdbcType=BIGINT}, 
+    values (#{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{brandId,jdbcType=BIGINT}, 
+      #{cid,jdbcType=BIGINT}, #{brandName,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{valued,jdbcType=BIT}, #{userId,jdbcType=BIGINT}, #{expertId,jdbcType=BIGINT}, 
       #{itemsId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
       #{itemDesc,jdbcType=LONGVARCHAR}, #{consultTx,jdbcType=LONGVARCHAR}, #{resposeTx,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.ConsultItemWithBLOBs">
+    <selectKey keyProperty="consultId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into consult_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="consultId != null">
-        consult_id,
-      </if>
       <if test="shopId != null">
         shop_id,
       </if>
@@ -201,9 +204,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="consultId != null">
-        #{consultId,jdbcType=BIGINT},
-      </if>
       <if test="shopId != null">
         #{shopId,jdbcType=BIGINT},
       </if>
