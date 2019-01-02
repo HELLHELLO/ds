@@ -21,7 +21,7 @@ public class ItemCat {
 
     private Boolean valued;
 
-    private String picId;
+    private Long picId;
 
     private String catDesc;
 
@@ -97,12 +97,12 @@ public class ItemCat {
         this.valued = valued;
     }
 
-    public String getPicId() {
+    public Long getPicId() {
         return picId;
     }
 
-    public void setPicId(String picId) {
-        this.picId = picId == null ? null : picId.trim();
+    public void setPicId(Long picId) {
+        this.picId = picId;
     }
 
     public String getCatDesc() {

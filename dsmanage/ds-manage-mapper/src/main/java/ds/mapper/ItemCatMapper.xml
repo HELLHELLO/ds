@@ -11,7 +11,7 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="valued" jdbcType="BIT" property="valued" />
-    <result column="pic_id" jdbcType="VARCHAR" property="picId" />
+    <result column="pic_id" jdbcType="BIGINT" property="picId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.ItemCat">
     <result column="cat_desc" jdbcType="LONGVARCHAR" property="catDesc" />
@@ -139,7 +139,7 @@
       cat_desc)
     values (#{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{valued,jdbcType=BIT}, #{picId,jdbcType=VARCHAR}, 
+      #{updated,jdbcType=TIMESTAMP}, #{valued,jdbcType=BIT}, #{picId,jdbcType=BIGINT}, 
       #{catDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.ItemCat">
@@ -205,7 +205,7 @@
         #{valued,jdbcType=BIT},
       </if>
       <if test="picId != null">
-        #{picId,jdbcType=VARCHAR},
+        #{picId,jdbcType=BIGINT},
       </if>
       <if test="catDesc != null">
         #{catDesc,jdbcType=LONGVARCHAR},
@@ -249,7 +249,7 @@
         valued = #{record.valued,jdbcType=BIT},
       </if>
       <if test="record.picId != null">
-        pic_id = #{record.picId,jdbcType=VARCHAR},
+        pic_id = #{record.picId,jdbcType=BIGINT},
       </if>
       <if test="record.catDesc != null">
         cat_desc = #{record.catDesc,jdbcType=LONGVARCHAR},
@@ -270,7 +270,7 @@
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       valued = #{record.valued,jdbcType=BIT},
-      pic_id = #{record.picId,jdbcType=VARCHAR},
+      pic_id = #{record.picId,jdbcType=BIGINT},
       cat_desc = #{record.catDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -287,7 +287,7 @@
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       valued = #{record.valued,jdbcType=BIT},
-      pic_id = #{record.picId,jdbcType=VARCHAR}
+      pic_id = #{record.picId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -320,7 +320,7 @@
         valued = #{valued,jdbcType=BIT},
       </if>
       <if test="picId != null">
-        pic_id = #{picId,jdbcType=VARCHAR},
+        pic_id = #{picId,jdbcType=BIGINT},
       </if>
       <if test="catDesc != null">
         cat_desc = #{catDesc,jdbcType=LONGVARCHAR},
@@ -338,7 +338,7 @@
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       valued = #{valued,jdbcType=BIT},
-      pic_id = #{picId,jdbcType=VARCHAR},
+      pic_id = #{picId,jdbcType=BIGINT},
       cat_desc = #{catDesc,jdbcType=LONGVARCHAR}
     where cat_id = #{catId,jdbcType=BIGINT}
   </update>
@@ -352,7 +352,7 @@
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       valued = #{valued,jdbcType=BIT},
-      pic_id = #{picId,jdbcType=VARCHAR}
+      pic_id = #{picId,jdbcType=BIGINT}
     where cat_id = #{catId,jdbcType=BIGINT}
   </update>
 </mapper>

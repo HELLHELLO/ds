@@ -665,62 +665,52 @@ public class ItemCatExample {
             return (Criteria) this;
         }
 
-        public Criteria andPicIdEqualTo(String value) {
+        public Criteria andPicIdEqualTo(Long value) {
             addCriterion("pic_id =", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdNotEqualTo(String value) {
+        public Criteria andPicIdNotEqualTo(Long value) {
             addCriterion("pic_id <>", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdGreaterThan(String value) {
+        public Criteria andPicIdGreaterThan(Long value) {
             addCriterion("pic_id >", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdGreaterThanOrEqualTo(String value) {
+        public Criteria andPicIdGreaterThanOrEqualTo(Long value) {
             addCriterion("pic_id >=", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdLessThan(String value) {
+        public Criteria andPicIdLessThan(Long value) {
             addCriterion("pic_id <", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdLessThanOrEqualTo(String value) {
+        public Criteria andPicIdLessThanOrEqualTo(Long value) {
             addCriterion("pic_id <=", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdLike(String value) {
-            addCriterion("pic_id like", value, "picId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicIdNotLike(String value) {
-            addCriterion("pic_id not like", value, "picId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicIdIn(List<String> values) {
+        public Criteria andPicIdIn(List<Long> values) {
             addCriterion("pic_id in", values, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdNotIn(List<String> values) {
+        public Criteria andPicIdNotIn(List<Long> values) {
             addCriterion("pic_id not in", values, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdBetween(String value1, String value2) {
+        public Criteria andPicIdBetween(Long value1, Long value2) {
             addCriterion("pic_id between", value1, value2, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPicIdNotBetween(String value1, String value2) {
+        public Criteria andPicIdNotBetween(Long value1, Long value2) {
             addCriterion("pic_id not between", value1, value2, "picId");
             return (Criteria) this;
         }

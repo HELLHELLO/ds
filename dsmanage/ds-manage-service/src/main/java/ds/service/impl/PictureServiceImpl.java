@@ -21,7 +21,7 @@ import java.util.UUID;
 @Service
 public class PictureServiceImpl implements PictureService {
 
-    @Value("${FTP_ADDRESS}")
+    @Value("${FTP_ADDRESS}")    //配置文件为resource.properties
     private String ftpAdress;
     @Value("${FTP_PORT}")
     private int ftpPort;
@@ -49,7 +49,8 @@ public class PictureServiceImpl implements PictureService {
         try {
             boolean result=FtpUtil.uploadFile(ftpAdress, ftpPort, ftpUser, ftpPassword, ftpBasePath,imagePath, newName, picture.getInputStream());
             if (!result){   //上传失败
-                resultMap.put("statu","1");
+                resultMap.put("statu","failed");
+                resultMap.put("code","1");
                 resultMap.put("message","upload failed");
                 resultMap.put("url","");
                 resultMap.put("picId","");
@@ -57,7 +58,8 @@ public class PictureServiceImpl implements PictureService {
             }
         }
         catch (IOException ioError){    //上传文件流出现错误
-            resultMap.put("statu","1");
+            resultMap.put("statu","failed");
+            resultMap.put("code","1");
             resultMap.put("message","uploaded file wrong");
             resultMap.put("url","");
             resultMap.put("picId","");
@@ -70,8 +72,9 @@ public class PictureServiceImpl implements PictureService {
         itemPic.setPicStatu(true);
         itemPic.setPicUrl(picUrl);
         int insertResult=itemPicMapper.insertSelective(itemPic);
-        if(insertResult==0){
-            resultMap.put("statu","1");
+        if(insertResult==0){        //存入数据库失败，报错
+            resultMap.put("statu","failed");
+            resultMap.put("code","1");
             resultMap.put("message","failed to insert to database");
             resultMap.put("url","");
             resultMap.put("picId","");
@@ -80,7 +83,8 @@ public class PictureServiceImpl implements PictureService {
         Long picId=itemPic.getPicId();  //获取插入后的图片id
 
 
-        resultMap.put("statu","0");
+        resultMap.put("statu","success");
+        resultMap.put("code","0");
         resultMap.put("message","success");
         resultMap.put("url",pictureBaseUrl+imagePath+"/"+newName);
         resultMap.put("picId",picId.toString());

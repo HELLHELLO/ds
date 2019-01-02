@@ -21,14 +21,22 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <!-- 解决post乱码 -->
+    <!-- 配置springMVC编码过滤器 -->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <!-- 设置过滤器中的属性值 -->
         <init-param>
             <param-name>encoding</param-name>
-            <param-value>utf-8</param-value>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <!-- 启动过滤器 -->
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
         </init-param>
     </filter>
+    <!-- 过滤所有请求 -->
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>

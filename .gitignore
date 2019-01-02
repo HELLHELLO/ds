@@ -2,6 +2,7 @@
 
 target/
 images/
+test/
 *.class
 *.gif
 
