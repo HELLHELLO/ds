@@ -11,14 +11,21 @@ import ds.service.UserListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 @Service
 public class UserListServiceImpl implements UserListService {
     @Autowired
     private UserMapper userMapper;
+
+    //private enum userRoles{"cosumer", "marchant", "tracemng", "expert"};
+    private static final HashSet<String> userRoles = new HashSet<String>() {{
+        add("cosumer");
+        add("marchant");
+        add("tracemng");
+        add("expert");
+    }};
 
     @Override
     public DataGridResult getUserById(long page, long rows, long id) {
@@ -67,5 +74,84 @@ public class UserListServiceImpl implements UserListService {
             result.put("message","something wrong");
             return result;
         }
+    }
+
+
+    //该方法未测试
+    @Override
+    public Map updateUserById(User user) {
+        Map result=new HashMap();
+        if (user.getUserId()==null){    //如果未指定用户id，直接报错
+            result.put("statu","failed");
+            result.put("code","6");
+            result.put("message","missing userId");
+            return result;
+        }
+
+        try {
+            //检查该用户是否存在
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andValuedEqualTo(true).andUserIdEqualTo(user.getUserId());
+            long exist = userMapper.countByExample(userExample);//若不存在则报错
+            if (exist == 0) {
+                result.put("statu", "failed");
+                result.put("code", "5");
+                result.put("message", "user does not exist");
+                return result;
+            }
+            user.setPassword(null);     //禁止修改用户的用户名与密码
+            user.setUsername(null);
+            user.setValued(null);       //该接口不实现删除功能
+            user.setRole(null);         //该接口不能修改用户角色，由其他接口实现。
+
+            int resultNum = userMapper.updateByExampleSelective(user, userExample);
+            if (resultNum > 0) {
+                result.put("statu", "success");
+                result.put("code", "0");
+                result.put("message", "update success");
+                return result;
+            } else {
+                result.put("statu", "failed");
+                result.put("code", "2");
+                result.put("message", "failed to update");
+                return result;
+            }
+
+        }
+        catch (Exception e){
+            result.put("statu","failed");
+            result.put("code","6");
+            result.put("message","something wrong");
+            result.put("detail",e.getMessage());
+            return result;
+        }
+
+
+    }
+
+    @Override
+    public Map deleteComuserUserById(Long id) {
+        Map result=new HashMap();
+        if (id==null){
+            result.put("statu","failed");
+            result.put("code","6");
+            result.put("message","missing userId");
+            return result;
+        }
+        User user=userMapper.selectByPrimaryKey(id);
+        if(user==null){
+            result.put("statu","failed");
+            result.put("code","5");
+            result.put("message","target does not exist");
+            return result;
+        }
+        if (!user.getRole().equals("cosumer")){
+            result.put("statu","failed");
+            result.put("code","7");
+            result.put("message","the user is not a cosumer");
+            return result;
+        }
+
+        return null;
     }
 }

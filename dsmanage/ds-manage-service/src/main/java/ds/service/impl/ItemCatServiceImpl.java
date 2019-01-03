@@ -84,17 +84,11 @@ public class ItemCatServiceImpl implements ItemCatService {
         itemCat.setIsParent(false);         //新创建的分类默认为不是父分类
 
 
-        if(itemCat.getPicId()!=null){       //如果设定了图片，检查图片是否存在
-            ItemPicExample checkPicExample=new ItemPicExample();
-            ItemPicExample.Criteria picCriteria=checkPicExample.createCriteria();
-            picCriteria.andPicIdEqualTo(itemCat.getPicId());
-            long checkPicResult=itemPicMapper.countByExample(checkPicExample);
-            if(checkPicResult==0){                         //若图片不存在，报错
-                result.put("statu","failed");
-                result.put("code","4");
-                result.put("message","picture does not exist");
-                return result;
-            }
+        if(!this.checkPic(itemCat)){
+            result.put("statu","failed");
+            result.put("code","4");
+            result.put("message","picture does not exist");
+            return result;
         }
 
         if (itemCat.getParentId()!=ROOTID){              //如果设定了父分类，检查该父分类是否存在
@@ -124,5 +118,116 @@ public class ItemCatServiceImpl implements ItemCatService {
         result.put("code","0");
         result.put("message","add success");
         return result;
+    }
+
+    @Override
+    public Map alterACatById(ItemCat itemCat) {
+        itemCat.setCreated(null);
+        itemCat.setUpdated(null);
+        itemCat.setValued(null);
+        itemCat.setStatus(null);
+        itemCat.setIsParent(null);         //清空不允许修改的参数
+        itemCat.setParentId(null);
+
+        Map result=new HashMap();
+        boolean checkPicResult=checkPic(itemCat);
+        if(!checkPicResult){                         //若图片不存在，报错
+            result.put("statu","failed");
+            result.put("code","4");
+            result.put("message","picture does not exist");
+            return result;
+        }
+
+        ItemCatExample itemCatExample=new ItemCatExample();
+        itemCatExample.createCriteria().andCatIdEqualTo(itemCat.getCatId());
+        try{
+            int updateNum=itemCatMapper.updateByExampleSelective(itemCat,itemCatExample);
+            if(updateNum>0){
+                result.put("statu","success");
+                result.put("code","0");
+                result.put("message","modify success");
+                return result;
+            }else{
+                result.put("statu","failed");
+                result.put("code","2");
+                result.put("message","fail to update");
+                return result;
+            }
+        }
+        catch (Exception e){
+            result.put("statu","failed");
+            result.put("code","2");
+            result.put("message","fail to update");
+            return result;
+        }
+    }
+
+    private boolean checkPic(ItemCat itemCat){
+        if(itemCat.getPicId()!=null){       //如果设定了图片，检查图片是否存在
+            ItemPicExample checkPicExample=new ItemPicExample();
+            ItemPicExample.Criteria picCriteria=checkPicExample.createCriteria();
+            picCriteria.andPicIdEqualTo(itemCat.getPicId());
+            long checkPicResult=itemPicMapper.countByExample(checkPicExample);
+            if(checkPicResult==0){                         //若图片不存在，报错
+                return false;
+            }else {
+                return true;
+            }
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public Map deleteACatById(Long catId) {
+        Map result=new HashMap();
+        if (catId==null){
+            result.put("statu","failed");
+            result.put("code","6");
+            result.put("message","missing catId");
+            return result;
+        }
+        ItemCat itemCat=new ItemCat();
+        itemCat.setCatId(catId);
+        try{
+            ItemCatExample itemCatExample=new ItemCatExample();     //检查该分类是否存在
+            itemCatExample.createCriteria().andCatIdEqualTo(catId).andValuedEqualTo(true);//设置查询条件
+            long exist=itemCatMapper.countByExample(itemCatExample);
+            if (exist==0){                                          //若该分类不存在，报错
+                result.put("statu","failed");
+                result.put("code","5");
+                result.put("message","target does not exist");
+                return result;
+            }
+            this.deleteCats(catId);
+            result.put("statu","success");
+            result.put("code","0");
+            result.put("message","delete success");
+            return result;
+
+
+        }catch (Exception e){
+            result.put("statu","failed");
+            result.put("code","6");
+            result.put("message","something wrong");
+            result.put("detail",e.getMessage());
+            return result;
+        }
+    }
+
+    public void deleteCats(Long catId) throws Exception{ //递归删除所有子分类
+        ItemCatExample itemCatExample=new ItemCatExample();
+        itemCatExample.createCriteria().andParentIdEqualTo(catId).andValuedEqualTo(true);//设置查询条件
+
+        ItemCat itemCat=itemCatMapper.selectByPrimaryKey(catId);
+        itemCat.setValued(false);
+        if (itemCat.getIsParent()){     //若是父分类，先删除其下的子分类
+            List<ItemCat> children=itemCatMapper.selectByExample(itemCatExample);
+            for(ItemCat child:children){
+                deleteCats(child.getCatId());     //递归删除
+            }
+        }
+        //itemCatMapper.deleteByPrimaryKey(catId);    //删除该分类
+        itemCatMapper.updateByPrimaryKey(itemCat);    //删除该分类，为了效率，删除操作为将有效标志位设为无效
     }
 }

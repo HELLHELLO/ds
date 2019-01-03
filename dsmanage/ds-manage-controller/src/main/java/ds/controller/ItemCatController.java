@@ -5,10 +5,7 @@ import ds.pojo.ItemCat;
 import ds.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +30,20 @@ public class ItemCatController {
         Map result=itemCatService.creatNewCat(itemCat);
         return result;
     }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    public Map updateACatById(ItemCat itemCat){
+        Map result=itemCatService.alterACatById(itemCat);
+        return result;
+    }
+
+    @RequestMapping(value = "/delete",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Map deleteACatById(@RequestParam(value = "catId",required = false) Long catId){
+        Map result=itemCatService.deleteACatById(catId);
+        return result;
+    }
+
+
 }

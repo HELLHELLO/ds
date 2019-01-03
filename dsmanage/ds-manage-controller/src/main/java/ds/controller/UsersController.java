@@ -1,6 +1,7 @@
 package ds.controller;
 
 import ds.common.pojo.DataGridResult;
+import ds.pojo.User;
 import ds.service.UserListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,13 @@ public class UsersController {
     @ResponseBody
     public Map getUserByUserName(@RequestParam(value = "name",defaultValue = "") String name){
         Map result=userListService.getUserByUserName(name);
+        return result;
+    }
+
+    @RequestMapping("/update")
+    @ResponseBody
+    public Map updateUserById(User user){
+        Map result=userListService.updateUserById(user);
         return result;
     }
 }
