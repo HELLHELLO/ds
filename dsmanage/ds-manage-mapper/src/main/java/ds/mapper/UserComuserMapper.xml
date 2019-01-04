@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="ds.pojo.UserComuser">
     <id column="comuser_id" jdbcType="BIGINT" property="comuserId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="valued" jdbcType="BIT" property="valued" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    comuser_id, user_id
+    comuser_id, user_id, valued
   </sql>
   <select id="selectByExample" parameterType="ds.pojo.UserComuserExample" resultMap="BaseResultMap">
     select
@@ -100,8 +101,8 @@
     <selectKey keyProperty="comuserId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ds_user_comuser (user_id)
-    values (#{userId,jdbcType=BIGINT})
+    insert into ds_user_comuser (user_id, valued)
+    values (#{userId,jdbcType=BIGINT}, #{valued,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.UserComuser">
     <selectKey keyProperty="comuserId" order="AFTER" resultType="java.lang.Long">
@@ -112,10 +113,16 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="valued != null">
+        valued,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +152,8 @@
   <update id="updateByExample" parameterType="map">
     update ds_user_comuser
     set comuser_id = #{record.comuserId,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT}
+      user_id = #{record.userId,jdbcType=BIGINT},
+      valued = #{record.valued,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +164,16 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
+      </if>
     </set>
     where comuser_id = #{comuserId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="ds.pojo.UserComuser">
     update ds_user_comuser
-    set user_id = #{userId,jdbcType=BIGINT}
+    set user_id = #{userId,jdbcType=BIGINT},
+      valued = #{valued,jdbcType=BIT}
     where comuser_id = #{comuserId,jdbcType=BIGINT}
   </update>
 </mapper>

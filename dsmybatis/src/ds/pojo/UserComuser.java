@@ -5,6 +5,8 @@ public class UserComuser {
 
     private Long userId;
 
+    private Boolean valued;
+
     public Long getComuserId() {
         return comuserId;
     }
@@ -19,5 +21,13 @@ public class UserComuser {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Boolean getValued() {
+        return valued;
+    }
+
+    public void setValued(Boolean valued) {
+        this.valued = valued;
     }
 }

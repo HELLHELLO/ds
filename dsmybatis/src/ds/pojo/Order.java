@@ -35,6 +35,8 @@ public class Order {
 
     private String buyerNick;
 
+    private Boolean valued;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -161,5 +163,13 @@ public class Order {
 
     public void setBuyerNick(String buyerNick) {
         this.buyerNick = buyerNick == null ? null : buyerNick.trim();
+    }
+
+    public Boolean getValued() {
+        return valued;
+    }
+
+    public void setValued(Boolean valued) {
+        this.valued = valued;
     }
 }

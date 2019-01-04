@@ -45,4 +45,11 @@ public class UsersController {
         Map result=userListService.updateUserById(user);
         return result;
     }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Map deleteUserById(@RequestParam(value = "id") Long id){
+        Map result = userListService.deleteComuserUserById(id);
+        return result;
+    }
 }
