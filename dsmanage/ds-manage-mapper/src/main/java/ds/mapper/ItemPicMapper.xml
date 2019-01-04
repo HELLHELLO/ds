@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ds.mapper.ItemPicMapper">
+  <resultMap id="BaseResultMap" type="ds.pojo.ItemPic">
+    <id column="pic_id" jdbcType="BIGINT" property="picId" />
+    <result column="items_id" jdbcType="BIGINT" property="itemsId" />
+    <result column="pic_dec" jdbcType="VARCHAR" property="picDec" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="pic_statu" jdbcType="BIT" property="picStatu" />
+    <result column="pic_master" jdbcType="BIT" property="picMaster" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="valued" jdbcType="BIT" property="valued" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pic_id, items_id, pic_dec, pic_url, pic_statu, pic_master, modified_time, valued, 
+    user_id
+  </sql>
+  <select id="selectByExample" parameterType="ds.pojo.ItemPicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ds_item_pic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ds_item_pic
+    where pic_id = #{picId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ds_item_pic
+    where pic_id = #{picId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="ds.pojo.ItemPicExample">
+    delete from ds_item_pic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ds.pojo.ItemPic">
+    <selectKey keyProperty="picId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_item_pic (items_id, pic_dec, pic_url, 
+      pic_statu, pic_master, modified_time, 
+      valued, user_id)
+    values (#{itemsId,jdbcType=BIGINT}, #{picDec,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{picStatu,jdbcType=BIT}, #{picMaster,jdbcType=BIT}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{valued,jdbcType=BIT}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="ds.pojo.ItemPic">
+    <selectKey keyProperty="picId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_item_pic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemsId != null">
+        items_id,
+      </if>
+      <if test="picDec != null">
+        pic_dec,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="picStatu != null">
+        pic_statu,
+      </if>
+      <if test="picMaster != null">
+        pic_master,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+      <if test="valued != null">
+        valued,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemsId != null">
+        #{itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="picDec != null">
+        #{picDec,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picStatu != null">
+        #{picStatu,jdbcType=BIT},
+      </if>
+      <if test="picMaster != null">
+        #{picMaster,jdbcType=BIT},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ds.pojo.ItemPicExample" resultType="java.lang.Long">
+    select count(*) from ds_item_pic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ds_item_pic
+    <set>
+      <if test="record.picId != null">
+        pic_id = #{record.picId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemsId != null">
+        items_id = #{record.itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.picDec != null">
+        pic_dec = #{record.picDec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picUrl != null">
+        pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picStatu != null">
+        pic_statu = #{record.picStatu,jdbcType=BIT},
+      </if>
+      <if test="record.picMaster != null">
+        pic_master = #{record.picMaster,jdbcType=BIT},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ds_item_pic
+    set pic_id = #{record.picId,jdbcType=BIGINT},
+      items_id = #{record.itemsId,jdbcType=BIGINT},
+      pic_dec = #{record.picDec,jdbcType=VARCHAR},
+      pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      pic_statu = #{record.picStatu,jdbcType=BIT},
+      pic_master = #{record.picMaster,jdbcType=BIT},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      valued = #{record.valued,jdbcType=BIT},
+      user_id = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ds.pojo.ItemPic">
+    update ds_item_pic
+    <set>
+      <if test="itemsId != null">
+        items_id = #{itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="picDec != null">
+        pic_dec = #{picDec,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picStatu != null">
+        pic_statu = #{picStatu,jdbcType=BIT},
+      </if>
+      <if test="picMaster != null">
+        pic_master = #{picMaster,jdbcType=BIT},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pic_id = #{picId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ds.pojo.ItemPic">
+    update ds_item_pic
+    set items_id = #{itemsId,jdbcType=BIGINT},
+      pic_dec = #{picDec,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      pic_statu = #{picStatu,jdbcType=BIT},
+      pic_master = #{picMaster,jdbcType=BIT},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      valued = #{valued,jdbcType=BIT},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where pic_id = #{picId,jdbcType=BIGINT}
+  </update>
+</mapper>
