@@ -18,7 +18,10 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="buyer_message" jdbcType="VARCHAR" property="buyerMessage" />
     <result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
+<<<<<<< HEAD
     <result column="valued" jdbcType="BIT" property="valued" />
+=======
+>>>>>>> aaa
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,7 +84,11 @@
   <sql id="Base_Column_List">
     order_id, payment, payment_type, post_fee, status, create_time, update_time, payment_time, 
     consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, 
+<<<<<<< HEAD
     buyer_nick, valued
+=======
+    buyer_nick
+>>>>>>> aaa
   </sql>
   <select id="selectByExample" parameterType="ds.pojo.OrderExample" resultMap="BaseResultMap">
     select
@@ -121,14 +128,24 @@
       status, create_time, update_time, 
       payment_time, consign_time, end_time, 
       close_time, shipping_name, shipping_code, 
+<<<<<<< HEAD
       user_id, buyer_message, buyer_nick, 
       valued)
+=======
+      user_id, buyer_message, buyer_nick
+      )
+>>>>>>> aaa
     values (#{payment,jdbcType=VARCHAR}, #{paymentType,jdbcType=INTEGER}, #{postFee,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{paymentTime,jdbcType=TIMESTAMP}, #{consignTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{closeTime,jdbcType=TIMESTAMP}, #{shippingName,jdbcType=VARCHAR}, #{shippingCode,jdbcType=VARCHAR}, 
+<<<<<<< HEAD
       #{userId,jdbcType=BIGINT}, #{buyerMessage,jdbcType=VARCHAR}, #{buyerNick,jdbcType=VARCHAR}, 
       #{valued,jdbcType=BIT})
+=======
+      #{userId,jdbcType=BIGINT}, #{buyerMessage,jdbcType=VARCHAR}, #{buyerNick,jdbcType=VARCHAR}
+      )
+>>>>>>> aaa
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Order">
     <selectKey keyProperty="orderId" order="AFTER" resultType="java.lang.Long">
@@ -181,9 +198,12 @@
       <if test="buyerNick != null">
         buyer_nick,
       </if>
+<<<<<<< HEAD
       <if test="valued != null">
         valued,
       </if>
+=======
+>>>>>>> aaa
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="payment != null">
@@ -231,9 +251,12 @@
       <if test="buyerNick != null">
         #{buyerNick,jdbcType=VARCHAR},
       </if>
+<<<<<<< HEAD
       <if test="valued != null">
         #{valued,jdbcType=BIT},
       </if>
+=======
+>>>>>>> aaa
     </trim>
   </insert>
   <select id="countByExample" parameterType="ds.pojo.OrderExample" resultType="java.lang.Long">
@@ -293,9 +316,12 @@
       <if test="record.buyerNick != null">
         buyer_nick = #{record.buyerNick,jdbcType=VARCHAR},
       </if>
+<<<<<<< HEAD
       <if test="record.valued != null">
         valued = #{record.valued,jdbcType=BIT},
       </if>
+=======
+>>>>>>> aaa
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -318,8 +344,12 @@
       shipping_code = #{record.shippingCode,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=BIGINT},
       buyer_message = #{record.buyerMessage,jdbcType=VARCHAR},
+<<<<<<< HEAD
       buyer_nick = #{record.buyerNick,jdbcType=VARCHAR},
       valued = #{record.valued,jdbcType=BIT}
+=======
+      buyer_nick = #{record.buyerNick,jdbcType=VARCHAR}
+>>>>>>> aaa
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -372,9 +402,12 @@
       <if test="buyerNick != null">
         buyer_nick = #{buyerNick,jdbcType=VARCHAR},
       </if>
+<<<<<<< HEAD
       <if test="valued != null">
         valued = #{valued,jdbcType=BIT},
       </if>
+=======
+>>>>>>> aaa
     </set>
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
@@ -394,8 +427,12 @@
       shipping_code = #{shippingCode,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=BIGINT},
       buyer_message = #{buyerMessage,jdbcType=VARCHAR},
+<<<<<<< HEAD
       buyer_nick = #{buyerNick,jdbcType=VARCHAR},
       valued = #{valued,jdbcType=BIT}
+=======
+      buyer_nick = #{buyerNick,jdbcType=VARCHAR}
+>>>>>>> aaa
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
 </mapper>

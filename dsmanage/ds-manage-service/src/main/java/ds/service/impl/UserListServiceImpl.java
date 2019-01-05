@@ -2,6 +2,7 @@ package ds.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import ds.common.pojo.DataGridResult;
 import ds.mapper.*;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.beans.Transient;
 import java.sql.SQLException;
 import java.util.*;
+
 
 
 @Service
@@ -47,6 +49,7 @@ public class UserListServiceImpl implements UserListService {
         add("expert");
     }};
 
+
     @Override
     public DataGridResult getUserById(long page, long rows, long id) {
         UserExample userExample=new UserExample();
@@ -54,11 +57,13 @@ public class UserListServiceImpl implements UserListService {
         criteria.andUserIdEqualTo(id);
         criteria.andValuedEqualTo(true);
         DataGridResult result=new GetSelectResult<UserMapper,UserExample,User>((int)page,(int)rows,userMapper,userExample).getResult();//获取查询结果，因为pageHelper的大部分设置具有重复性所以我放到单独的类里做了
+
         List<User> users=(List<User>) result.getRows();
         for(User user:users){
             user.setPassword(null);
         }
         result.setRows(users);
+
         return result;
         /* PageHelper.startPage((int)page,(int)rows);
         List<User> list=userMapper.selectByExample(userExample);
@@ -73,11 +78,13 @@ public class UserListServiceImpl implements UserListService {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andValuedEqualTo(true);
         DataGridResult result=new GetSelectResult<UserMapper,UserExample,User>((int)page,(int)rows,userMapper,userExample).getResult();
+
         List<User> users=(List<User>) result.getRows();
         for(User user:users){
             user.setPassword(null);
         }
         result.setRows(users);
+
         return result;
     }
 
@@ -92,9 +99,11 @@ public class UserListServiceImpl implements UserListService {
         criteria.andValuedEqualTo(true);
         try {
             List<User> resultList = userMapper.selectByExample(userExample);
+
             for(User user:resultList){
                 user.setPassword(null);
             }
+
             result.put("statu","success");
             result.put("code","0");
             result.put("message","search success");
@@ -108,6 +117,7 @@ public class UserListServiceImpl implements UserListService {
             return result;
         }
     }
+
 
 
     //该方法未测试
@@ -256,4 +266,5 @@ public class UserListServiceImpl implements UserListService {
             return result;
 
     }
+
 }
