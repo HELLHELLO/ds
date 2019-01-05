@@ -130,6 +130,12 @@ public class ItemCatServiceImpl implements ItemCatService {
         itemCat.setParentId(null);
 
         Map result=new HashMap();
+        if (itemCat.getCatId()==null){
+            result.put("statu","failed");
+            result.put("code","6");
+            result.put("message","missing catId");
+            return result;
+        }
         boolean checkPicResult=checkPic(itemCat);
         if(!checkPicResult){                         //若图片不存在，报错
             result.put("statu","failed");
