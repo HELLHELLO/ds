@@ -1124,6 +1124,7 @@ public class OrderExample {
             addCriterion("buyer_nick not between", value1, value2, "buyerNick");
             return (Criteria) this;
         }
+<<<<<<< HEAD
 
         public Criteria andValuedIsNull() {
             addCriterion("valued is null");
@@ -1184,6 +1185,8 @@ public class OrderExample {
             addCriterion("valued not between", value1, value2, "valued");
             return (Criteria) this;
         }
+=======
+>>>>>>> aaa
     }
 
     public static class Criteria extends GeneratedCriteria {

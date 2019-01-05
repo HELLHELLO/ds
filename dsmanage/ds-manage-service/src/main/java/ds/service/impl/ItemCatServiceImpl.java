@@ -84,11 +84,13 @@ public class ItemCatServiceImpl implements ItemCatService {
         itemCat.setIsParent(false);         //新创建的分类默认为不是父分类
 
 
+
         if(!this.checkPic(itemCat)){
             result.put("statu","failed");
             result.put("code","4");
             result.put("message","picture does not exist");
             return result;
+
         }
 
         if (itemCat.getParentId()!=ROOTID){              //如果设定了父分类，检查该父分类是否存在
@@ -230,4 +232,5 @@ public class ItemCatServiceImpl implements ItemCatService {
         //itemCatMapper.deleteByPrimaryKey(catId);    //删除该分类
         itemCatMapper.updateByPrimaryKey(itemCat);    //删除该分类，为了效率，删除操作为将有效标志位设为无效
     }
+
 }

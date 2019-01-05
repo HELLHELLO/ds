@@ -223,6 +223,7 @@ public class UserComuserExample {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
+<<<<<<< HEAD
 
         public Criteria andValuedIsNull() {
             addCriterion("valued is null");
@@ -283,6 +284,8 @@ public class UserComuserExample {
             addCriterion("valued not between", value1, value2, "valued");
             return (Criteria) this;
         }
+=======
+>>>>>>> aaa
     }
 
     public static class Criteria extends GeneratedCriteria {

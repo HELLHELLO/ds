@@ -5,8 +5,11 @@ public class UserComuser {
 
     private Long userId;
 
+<<<<<<< HEAD
     private Boolean valued;
 
+=======
+>>>>>>> aaa
     public Long getComuserId() {
         return comuserId;
     }
@@ -22,6 +25,7 @@ public class UserComuser {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+<<<<<<< HEAD
 
     public Boolean getValued() {
         return valued;
@@ -30,4 +34,6 @@ public class UserComuser {
     public void setValued(Boolean valued) {
         this.valued = valued;
     }
+=======
+>>>>>>> aaa
 }

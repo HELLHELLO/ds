@@ -17,9 +17,11 @@ public interface ItemCatService {
     //创建一个新的分类
     public Map creatNewCat(ItemCat itemCat);
 
+
     //修改一个分类的信息
     public Map alterACatById(ItemCat itemCat);
 
     //删除一个分类及其下的所有子分类
     public Map deleteACatById(Long catId);
+
 }
