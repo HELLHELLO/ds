@@ -844,6 +844,136 @@ public class OrderShippingExample {
             addCriterion("updated not between", value1, value2, "updated");
             return (Criteria) this;
         }
+
+        public Criteria andShippingCodeIsNull() {
+            addCriterion("shipping_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeIsNotNull() {
+            addCriterion("shipping_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeEqualTo(String value) {
+            addCriterion("shipping_code =", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeNotEqualTo(String value) {
+            addCriterion("shipping_code <>", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeGreaterThan(String value) {
+            addCriterion("shipping_code >", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("shipping_code >=", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeLessThan(String value) {
+            addCriterion("shipping_code <", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeLessThanOrEqualTo(String value) {
+            addCriterion("shipping_code <=", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeLike(String value) {
+            addCriterion("shipping_code like", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeNotLike(String value) {
+            addCriterion("shipping_code not like", value, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeIn(List<String> values) {
+            addCriterion("shipping_code in", values, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeNotIn(List<String> values) {
+            addCriterion("shipping_code not in", values, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeBetween(String value1, String value2) {
+            addCriterion("shipping_code between", value1, value2, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andShippingCodeNotBetween(String value1, String value2) {
+            addCriterion("shipping_code not between", value1, value2, "shippingCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedIsNull() {
+            addCriterion("valued is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedIsNotNull() {
+            addCriterion("valued is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedEqualTo(Boolean value) {
+            addCriterion("valued =", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedNotEqualTo(Boolean value) {
+            addCriterion("valued <>", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedGreaterThan(Boolean value) {
+            addCriterion("valued >", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("valued >=", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedLessThan(Boolean value) {
+            addCriterion("valued <", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedLessThanOrEqualTo(Boolean value) {
+            addCriterion("valued <=", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedIn(List<Boolean> values) {
+            addCriterion("valued in", values, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedNotIn(List<Boolean> values) {
+            addCriterion("valued not in", values, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedBetween(Boolean value1, Boolean value2) {
+            addCriterion("valued between", value1, value2, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("valued not between", value1, value2, "valued");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

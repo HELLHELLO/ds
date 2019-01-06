@@ -82,7 +82,7 @@ public class ShopServiceImpl implements ShopService {
         if (id==null){
             result.put("statu","failed");
             result.put("code","6");
-            result.put("message","missing catId");
+            result.put("message","missing ShopId");
             return result;
         }
         UserShopWithBLOBs userShop=new UserShopWithBLOBs();

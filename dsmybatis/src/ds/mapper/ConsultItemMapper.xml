@@ -15,6 +15,7 @@
     <result column="items_id" jdbcType="BIGINT" property="itemsId" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.ConsultItemWithBLOBs">
     <result column="item_desc" jdbcType="LONGVARCHAR" property="itemDesc" />
@@ -81,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List">
     consult_id, shop_id, shop_name, brand_id, cid, brand_name, image, valued, user_id, 
-    expert_id, items_id, created, updated
+    expert_id, items_id, created, updated, status
   </sql>
   <sql id="Blob_Column_List">
     item_desc, consult_tx, respose_tx
@@ -142,14 +143,14 @@
       cid, brand_name, image, 
       valued, user_id, expert_id, 
       items_id, created, updated, 
-      item_desc, consult_tx, respose_tx
-      )
+      status, item_desc, consult_tx, 
+      respose_tx)
     values (#{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{brandId,jdbcType=BIGINT}, 
       #{cid,jdbcType=BIGINT}, #{brandName,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{valued,jdbcType=BIT}, #{userId,jdbcType=BIGINT}, #{expertId,jdbcType=BIGINT}, 
       #{itemsId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{itemDesc,jdbcType=LONGVARCHAR}, #{consultTx,jdbcType=LONGVARCHAR}, #{resposeTx,jdbcType=LONGVARCHAR}
-      )
+      #{status,jdbcType=BIT}, #{itemDesc,jdbcType=LONGVARCHAR}, #{consultTx,jdbcType=LONGVARCHAR}, 
+      #{resposeTx,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.ConsultItemWithBLOBs">
     <selectKey keyProperty="consultId" order="AFTER" resultType="java.lang.Long">
@@ -192,6 +193,9 @@
       </if>
       <if test="updated != null">
         updated,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="itemDesc != null">
         item_desc,
@@ -239,6 +243,9 @@
       </if>
       <if test="updated != null">
         #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
       </if>
       <if test="itemDesc != null">
         #{itemDesc,jdbcType=LONGVARCHAR},
@@ -299,6 +306,9 @@
       <if test="record.updated != null">
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
       <if test="record.itemDesc != null">
         item_desc = #{record.itemDesc,jdbcType=LONGVARCHAR},
       </if>
@@ -328,6 +338,7 @@
       items_id = #{record.itemsId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=BIT},
       item_desc = #{record.itemDesc,jdbcType=LONGVARCHAR},
       consult_tx = #{record.consultTx,jdbcType=LONGVARCHAR},
       respose_tx = #{record.resposeTx,jdbcType=LONGVARCHAR}
@@ -349,7 +360,8 @@
       expert_id = #{record.expertId,jdbcType=BIGINT},
       items_id = #{record.itemsId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP}
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -393,6 +405,9 @@
       <if test="updated != null">
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
       <if test="itemDesc != null">
         item_desc = #{itemDesc,jdbcType=LONGVARCHAR},
       </if>
@@ -419,6 +434,7 @@
       items_id = #{itemsId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
       item_desc = #{itemDesc,jdbcType=LONGVARCHAR},
       consult_tx = #{consultTx,jdbcType=LONGVARCHAR},
       respose_tx = #{resposeTx,jdbcType=LONGVARCHAR}
@@ -437,7 +453,8 @@
       expert_id = #{expertId,jdbcType=BIGINT},
       items_id = #{itemsId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = #{updated,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT}
     where consult_id = #{consultId,jdbcType=BIGINT}
   </update>
 </mapper>

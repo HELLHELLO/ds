@@ -1,10 +1,9 @@
 package ds.controller;
 
 import ds.common.pojo.DataGridResult;
-<<<<<<< HEAD
+
 import ds.pojo.User;
-=======
->>>>>>> aaa
+
 import ds.service.UserListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,7 +40,6 @@ public class UsersController {
         Map result=userListService.getUserByUserName(name);
         return result;
     }
-<<<<<<< HEAD
 
     @RequestMapping("/update")
     @ResponseBody
@@ -56,6 +54,5 @@ public class UsersController {
         Map result = userListService.deleteComuserUserById(id);
         return result;
     }
-=======
->>>>>>> aaa
+
 }
