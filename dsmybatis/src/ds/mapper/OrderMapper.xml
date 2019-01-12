@@ -20,6 +20,7 @@
     <result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
     <result column="valued" jdbcType="BIT" property="valued" />
     <result column="shipping_id" jdbcType="BIGINT" property="shippingId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,7 +83,7 @@
   <sql id="Base_Column_List">
     order_id, payment, payment_type, post_fee, status, create_time, update_time, payment_time, 
     consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, 
-    buyer_nick, valued, shipping_id
+    buyer_nick, valued, shipping_id, shop_id
   </sql>
   <select id="selectByExample" parameterType="ds.pojo.OrderExample" resultMap="BaseResultMap">
     select
@@ -123,13 +124,15 @@
       payment_time, consign_time, end_time, 
       close_time, shipping_name, shipping_code, 
       user_id, buyer_message, buyer_nick, 
-      valued, shipping_id)
+      valued, shipping_id, shop_id
+      )
     values (#{payment,jdbcType=VARCHAR}, #{paymentType,jdbcType=INTEGER}, #{postFee,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{paymentTime,jdbcType=TIMESTAMP}, #{consignTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{closeTime,jdbcType=TIMESTAMP}, #{shippingName,jdbcType=VARCHAR}, #{shippingCode,jdbcType=VARCHAR}, 
       #{userId,jdbcType=BIGINT}, #{buyerMessage,jdbcType=VARCHAR}, #{buyerNick,jdbcType=VARCHAR}, 
-      #{valued,jdbcType=BIT}, #{shippingId,jdbcType=BIGINT})
+      #{valued,jdbcType=BIT}, #{shippingId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Order">
     <selectKey keyProperty="orderId" order="AFTER" resultType="java.lang.Long">
@@ -188,6 +191,9 @@
       <if test="shippingId != null">
         shipping_id,
       </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="payment != null">
@@ -240,6 +246,9 @@
       </if>
       <if test="shippingId != null">
         #{shippingId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -306,6 +315,9 @@
       <if test="record.shippingId != null">
         shipping_id = #{record.shippingId,jdbcType=BIGINT},
       </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -330,7 +342,8 @@
       buyer_message = #{record.buyerMessage,jdbcType=VARCHAR},
       buyer_nick = #{record.buyerNick,jdbcType=VARCHAR},
       valued = #{record.valued,jdbcType=BIT},
-      shipping_id = #{record.shippingId,jdbcType=BIGINT}
+      shipping_id = #{record.shippingId,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -389,6 +402,9 @@
       <if test="shippingId != null">
         shipping_id = #{shippingId,jdbcType=BIGINT},
       </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
     </set>
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
@@ -410,7 +426,8 @@
       buyer_message = #{buyerMessage,jdbcType=VARCHAR},
       buyer_nick = #{buyerNick,jdbcType=VARCHAR},
       valued = #{valued,jdbcType=BIT},
-      shipping_id = #{shippingId,jdbcType=BIGINT}
+      shipping_id = #{shippingId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT}
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
 </mapper>

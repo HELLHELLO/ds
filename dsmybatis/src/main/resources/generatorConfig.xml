@@ -105,5 +105,11 @@
         <table tableName="trace_mng" schema="" domainObjectName="TraceMng">
             <generatedKey column="mng_id" sqlStatement="mysql" identity="true"/>
         </table>
+        <table tableName="content_category" schema="" domainObjectName="ContentCategory">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="content" schema="" domainObjectName="Content">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

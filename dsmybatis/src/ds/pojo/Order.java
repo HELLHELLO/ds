@@ -39,6 +39,8 @@ public class Order {
 
     private Long shippingId;
 
+    private Long shopId;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -181,5 +183,13 @@ public class Order {
 
     public void setShippingId(Long shippingId) {
         this.shippingId = shippingId;
+    }
+
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
     }
 }
