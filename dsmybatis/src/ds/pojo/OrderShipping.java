@@ -25,6 +25,10 @@ public class OrderShipping {
 
     private Date updated;
 
+    private String shippingCode;
+
+    private Boolean valued1;
+
     public Long getShippingId() {
         return shippingId;
     }
@@ -111,5 +115,21 @@ public class OrderShipping {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getShippingCode() {
+        return shippingCode;
+    }
+
+    public void setShippingCode(String shippingCode) {
+        this.shippingCode = shippingCode == null ? null : shippingCode.trim();
+    }
+
+    public Boolean getValued1() {
+        return valued1;
+    }
+
+    public void setValued1(Boolean valued1) {
+        this.valued1 = valued1;
     }
 }
