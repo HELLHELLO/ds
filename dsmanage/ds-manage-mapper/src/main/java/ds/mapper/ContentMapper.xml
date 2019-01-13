@@ -12,6 +12,7 @@
     <result column="pic2" jdbcType="VARCHAR" property="pic2" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="valued" jdbcType="BIT" property="valued" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.Content">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -75,7 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, category_id, title, sub_title, title_desc, url, pic, pic2, created, updated
+    id, category_id, title, sub_title, title_desc, url, pic, pic2, created, updated, 
+    valued
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -135,11 +137,11 @@
     insert into content (category_id, title, sub_title, 
       title_desc, url, pic, 
       pic2, created, updated, 
-      content)
+      valued, content)
     values (#{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
       #{titleDesc,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
       #{pic2,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{valued,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Content">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -174,6 +176,9 @@
       <if test="updated != null">
         updated,
       </if>
+      <if test="valued != null">
+        valued,
+      </if>
       <if test="content != null">
         content,
       </if>
@@ -205,6 +210,9 @@
       </if>
       <if test="updated != null">
         #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -250,6 +258,9 @@
       <if test="record.updated != null">
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
+      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -270,6 +281,7 @@
       pic2 = #{record.pic2,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
+      valued = #{record.valued,jdbcType=BIT},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -286,7 +298,8 @@
       pic = #{record.pic,jdbcType=VARCHAR},
       pic2 = #{record.pic2,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP}
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      valued = #{record.valued,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -321,6 +334,9 @@
       <if test="updated != null">
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -338,6 +354,7 @@
       pic2 = #{pic2,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
+      valued = #{valued,jdbcType=BIT},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -351,7 +368,8 @@
       pic = #{pic,jdbcType=VARCHAR},
       pic2 = #{pic2,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = #{updated,jdbcType=TIMESTAMP},
+      valued = #{valued,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -23,6 +23,8 @@ public class Content {
 
     private Date updated;
 
+    private Boolean valued;
+
     private String content;
 
     public Long getId() {
@@ -103,6 +105,14 @@ public class Content {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Boolean getValued() {
+        return valued;
+    }
+
+    public void setValued(Boolean valued) {
+        this.valued = valued;
     }
 
     public String getContent() {

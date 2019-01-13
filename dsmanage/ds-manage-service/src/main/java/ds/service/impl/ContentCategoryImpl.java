@@ -132,6 +132,12 @@ public class ContentCategoryImpl implements ContentCategoryService {
     @Override
     public Map deleteCate(Long id) {
         Map result=new HashMap();
+        if(id==null){
+            result.put("statu","failed");
+            result.put("code","1");
+            result.put("message","empty id");
+            return result;
+        }
         boolean success;
         success=delete(id);
         if (success){
