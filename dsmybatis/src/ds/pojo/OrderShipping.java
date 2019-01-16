@@ -27,7 +27,7 @@ public class OrderShipping {
 
     private String shippingCode;
 
-    private Boolean valued1;
+    private Boolean valued;
 
     public Long getShippingId() {
         return shippingId;
@@ -125,11 +125,11 @@ public class OrderShipping {
         this.shippingCode = shippingCode == null ? null : shippingCode.trim();
     }
 
-    public Boolean getValued1() {
-        return valued1;
+    public Boolean getValued() {
+        return valued;
     }
 
-    public void setValued1(Boolean valued1) {
-        this.valued1 = valued1;
+    public void setValued(Boolean valued) {
+        this.valued = valued;
     }
 }

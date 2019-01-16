@@ -915,63 +915,63 @@ public class OrderShippingExample {
             return (Criteria) this;
         }
 
-        public Criteria andValued1IsNull() {
-            addCriterion("valued1 is null");
+        public Criteria andValuedIsNull() {
+            addCriterion("valued is null");
             return (Criteria) this;
         }
 
-        public Criteria andValued1IsNotNull() {
-            addCriterion("valued1 is not null");
+        public Criteria andValuedIsNotNull() {
+            addCriterion("valued is not null");
             return (Criteria) this;
         }
 
-        public Criteria andValued1EqualTo(Boolean value) {
-            addCriterion("valued1 =", value, "valued1");
+        public Criteria andValuedEqualTo(Boolean value) {
+            addCriterion("valued =", value, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1NotEqualTo(Boolean value) {
-            addCriterion("valued1 <>", value, "valued1");
+        public Criteria andValuedNotEqualTo(Boolean value) {
+            addCriterion("valued <>", value, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1GreaterThan(Boolean value) {
-            addCriterion("valued1 >", value, "valued1");
+        public Criteria andValuedGreaterThan(Boolean value) {
+            addCriterion("valued >", value, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1GreaterThanOrEqualTo(Boolean value) {
-            addCriterion("valued1 >=", value, "valued1");
+        public Criteria andValuedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("valued >=", value, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1LessThan(Boolean value) {
-            addCriterion("valued1 <", value, "valued1");
+        public Criteria andValuedLessThan(Boolean value) {
+            addCriterion("valued <", value, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1LessThanOrEqualTo(Boolean value) {
-            addCriterion("valued1 <=", value, "valued1");
+        public Criteria andValuedLessThanOrEqualTo(Boolean value) {
+            addCriterion("valued <=", value, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1In(List<Boolean> values) {
-            addCriterion("valued1 in", values, "valued1");
+        public Criteria andValuedIn(List<Boolean> values) {
+            addCriterion("valued in", values, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1NotIn(List<Boolean> values) {
-            addCriterion("valued1 not in", values, "valued1");
+        public Criteria andValuedNotIn(List<Boolean> values) {
+            addCriterion("valued not in", values, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1Between(Boolean value1, Boolean value2) {
-            addCriterion("valued1 between", value1, value2, "valued1");
+        public Criteria andValuedBetween(Boolean value1, Boolean value2) {
+            addCriterion("valued between", value1, value2, "valued");
             return (Criteria) this;
         }
 
-        public Criteria andValued1NotBetween(Boolean value1, Boolean value2) {
-            addCriterion("valued1 not between", value1, value2, "valued1");
+        public Criteria andValuedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("valued not between", value1, value2, "valued");
             return (Criteria) this;
         }
     }

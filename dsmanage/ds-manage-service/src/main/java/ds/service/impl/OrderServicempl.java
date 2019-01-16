@@ -31,8 +31,8 @@ public class OrderServicempl implements OrderService {
         criteria.andValuedEqualTo(true);
         List<Order> list=orderMapper.selectByExample(orderExample);
         if(list==null){
-            result.put("statu","fail");result.put("code","1");
-
+            result.put("statu","fail");
+            result.put("code","1");
             result.put("message","create list failed");
             return result;
         }else{
@@ -53,31 +53,46 @@ public class OrderServicempl implements OrderService {
     @Override
     public Map getOrderById(Long orderId,Long orderShippingId){
         Map result=new HashMap();
-
-        //OrderExample orderExample=new OrderExample();
-        //OrderExample.Criteria criteria=orderExample.createCriteria();
-        //criteria.andValuedEqualTo(true);
-        //criteria.andOrderIdEqualTo(orderId);
-
-        //OrderShippingExample orderShippingExample=new OrderShippingExample();
-        //OrderShippingExample.Criteria criteria_=orderShippingExample.createCriteria();
-        //criteria_.andShippingIdEqualTo(orderShippingId);
-        //List<Order> list=orderMapper.selectByExample(orderExample);
         Order order=orderMapper.selectByPrimaryKey(orderId);
         OrderShipping orderShipping=orderShippingMapper.selectByPrimaryKey(orderShippingId);
-
-        if(order!=null&&order.getValued()==(byte)){
-            Order order=list.get(0);
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","find order");
-            result.put("list",order);
-            return result;
+        if(order!=null&&order.getValued()==true){
+            if(orderShipping!=null&&orderShipping.getValued()==true){
+                result.put("statu","success");
+                result.put("code","0");
+                result.put("message","find order and orderShipping");
+                result.put("order",order);
+                result.put("orderShipping",orderShipping);
+                return result;
+            }else{
+                result.put("statu","success");
+                result.put("code","1");
+                result.put("message","find order,but not find orderShipping");
+                result.put("order",order);
+                return result;
+            }
         }else{
             result.put("statu","fail");
-            result.put("code","1");
+            result.put("code","2");
             result.put("message","no match order");
             return result;
         }
+    }
+    @Override
+    Map getOrderByShipCode(String shippingCode){
+        Map result=new HashMap();
+
+        OrderExample orderExample=new OrderExample();
+        OrderExample.Criteria criteria=orderExample.createCriteria();
+        criteria.andValuedEqualTo(true);
+        criteria.andShippingCodeEqualTo(shippingCode);
+        List<Order> list=orderMapper.selectByExample(orderExample);
+
+        OrderShippingExample orderShippingExample=new OrderShippingExample();
+        OrderShippingExample.Criteria criteria1=orderShippingExample.createCriteria();
+        criteria1.andValuedEqualTo(true);
+        criteria1.andShippingCodeEqualTo(shippingCode);
+        List<OrderShipping> list1=orderShippingMapper.selectByExample(orderShippingExample);
+
+        if()
     }
 }

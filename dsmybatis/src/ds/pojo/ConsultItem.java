@@ -29,6 +29,8 @@ public class ConsultItem {
 
     private Date updated;
 
+    private Boolean status;
+
     public Long getConsultId() {
         return consultId;
     }
@@ -131,5 +133,13 @@ public class ConsultItem {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

@@ -11,6 +11,10 @@ public class Expert {
 
     private Boolean valued;
 
+    private Long userId;
+
+    private Boolean status;
+
     public Long getExpert() {
         return expert;
     }
@@ -49,5 +53,21 @@ public class Expert {
 
     public void setValued(Boolean valued) {
         this.valued = valued;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

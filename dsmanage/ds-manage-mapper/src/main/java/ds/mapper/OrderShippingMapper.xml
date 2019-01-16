@@ -14,7 +14,7 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
-    <result column="valued1" jdbcType="BIT" property="valued1" />
+    <result column="valued" jdbcType="BIT" property="valued" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -77,7 +77,7 @@
   <sql id="Base_Column_List">
     shipping_id, receiver_name, receiver_phone, receiver_mobile, receiver_state, receiver_city, 
     receiver_district, receiver_address, receiver_zip, created, updated, shipping_code, 
-    valued1
+    valued
   </sql>
   <select id="selectByExample" parameterType="ds.pojo.OrderShippingExample" resultMap="BaseResultMap">
     select
@@ -116,12 +116,12 @@
     insert into ds_order_shipping (receiver_name, receiver_phone, receiver_mobile, 
       receiver_state, receiver_city, receiver_district, 
       receiver_address, receiver_zip, created, 
-      updated, shipping_code, valued1
+      updated, shipping_code, valued
       )
     values (#{receiverName,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}, #{receiverMobile,jdbcType=VARCHAR}, 
       #{receiverState,jdbcType=VARCHAR}, #{receiverCity,jdbcType=VARCHAR}, #{receiverDistrict,jdbcType=VARCHAR}, 
       #{receiverAddress,jdbcType=VARCHAR}, #{receiverZip,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{shippingCode,jdbcType=VARCHAR}, #{valued1,jdbcType=BIT}
+      #{updated,jdbcType=TIMESTAMP}, #{shippingCode,jdbcType=VARCHAR}, #{valued,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.OrderShipping">
@@ -163,8 +163,8 @@
       <if test="shippingCode != null">
         shipping_code,
       </if>
-      <if test="valued1 != null">
-        valued1,
+      <if test="valued != null">
+        valued,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -201,8 +201,8 @@
       <if test="shippingCode != null">
         #{shippingCode,jdbcType=VARCHAR},
       </if>
-      <if test="valued1 != null">
-        #{valued1,jdbcType=BIT},
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -251,8 +251,8 @@
       <if test="record.shippingCode != null">
         shipping_code = #{record.shippingCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.valued1 != null">
-        valued1 = #{record.valued1,jdbcType=BIT},
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -273,7 +273,7 @@
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       shipping_code = #{record.shippingCode,jdbcType=VARCHAR},
-      valued1 = #{record.valued1,jdbcType=BIT}
+      valued = #{record.valued,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -314,8 +314,8 @@
       <if test="shippingCode != null">
         shipping_code = #{shippingCode,jdbcType=VARCHAR},
       </if>
-      <if test="valued1 != null">
-        valued1 = #{valued1,jdbcType=BIT},
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
       </if>
     </set>
     where shipping_id = #{shippingId,jdbcType=BIGINT}
@@ -333,7 +333,7 @@
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       shipping_code = #{shippingCode,jdbcType=VARCHAR},
-      valued1 = #{valued1,jdbcType=BIT}
+      valued = #{valued,jdbcType=BIT}
     where shipping_id = #{shippingId,jdbcType=BIGINT}
   </update>
 </mapper>
