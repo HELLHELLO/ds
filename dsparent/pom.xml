@@ -30,6 +30,8 @@
         <pagehelper.version>5.1.8</pagehelper.version>
         <commons-net.version>3.6</commons-net.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
+        <redis.clients.version>3.0.1</redis.clients.version>
+        <org.apache.solr.version>7.6.0</org.apache.solr.version>
     </properties>
 
     <dependencyManagement>
@@ -184,6 +186,20 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${redis.clients.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+            <dependency>
+                <groupId>org.apache.solr</groupId>
+                <artifactId>solr-solrj</artifactId>
+                <version>${org.apache.solr.version}</version>
             </dependency>
 
 
