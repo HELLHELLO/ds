@@ -17,7 +17,7 @@ public class ContentServiceImpl implements ContentService {
 
     @Autowired
     private ContentMapper contentMapper;
-
+    @Autowired
     private ItemPicMapper itemPicMapper;
 
     @Override

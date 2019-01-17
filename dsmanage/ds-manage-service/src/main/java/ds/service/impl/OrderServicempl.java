@@ -9,7 +9,6 @@ import ds.pojo.OrderExample;
 import ds.pojo.OrderShipping;
 import ds.pojo.OrderShippingExample;
 import ds.service.OrderService;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,7 +76,7 @@ public class OrderServicempl implements OrderService {
             return result;
         }
     }
-    @Override
+
     Map getOrderByShipCode(String shippingCode){
         Map result=new HashMap();
 
@@ -93,6 +92,6 @@ public class OrderServicempl implements OrderService {
         criteria1.andShippingCodeEqualTo(shippingCode);
         List<OrderShipping> list1=orderShippingMapper.selectByExample(orderShippingExample);
 
-        if()
+        return null;
     }
 }

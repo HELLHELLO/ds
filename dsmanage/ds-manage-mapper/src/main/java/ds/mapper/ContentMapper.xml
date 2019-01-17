@@ -12,9 +12,7 @@
     <result column="pic2" jdbcType="VARCHAR" property="pic2" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
-
     <result column="valued" jdbcType="BIT" property="valued" />
-
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.Content">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -78,12 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-<<<<<<< HEAD
-    id, category_id, title, sub_title, title_desc, url, pic, pic2, created, updated
-=======
     id, category_id, title, sub_title, title_desc, url, pic, pic2, created, updated, 
     valued
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -143,19 +137,11 @@
     insert into content (category_id, title, sub_title, 
       title_desc, url, pic, 
       pic2, created, updated, 
-<<<<<<< HEAD
-      content)
-    values (#{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
-      #{titleDesc,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
-      #{pic2,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
-=======
       valued, content)
     values (#{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
       #{titleDesc,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
       #{pic2,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
       #{valued,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Content">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -190,12 +176,9 @@
       <if test="updated != null">
         updated,
       </if>
-<<<<<<< HEAD
-=======
       <if test="valued != null">
         valued,
       </if>
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
       <if test="content != null">
         content,
       </if>
@@ -228,12 +211,9 @@
       <if test="updated != null">
         #{updated,jdbcType=TIMESTAMP},
       </if>
-<<<<<<< HEAD
-=======
       <if test="valued != null">
         #{valued,jdbcType=BIT},
       </if>
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -278,12 +258,9 @@
       <if test="record.updated != null">
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
-<<<<<<< HEAD
-=======
       <if test="record.valued != null">
         valued = #{record.valued,jdbcType=BIT},
       </if>
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -304,10 +281,7 @@
       pic2 = #{record.pic2,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
-<<<<<<< HEAD
-=======
       valued = #{record.valued,jdbcType=BIT},
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -324,12 +298,8 @@
       pic = #{record.pic,jdbcType=VARCHAR},
       pic2 = #{record.pic2,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
-<<<<<<< HEAD
-      updated = #{record.updated,jdbcType=TIMESTAMP}
-=======
       updated = #{record.updated,jdbcType=TIMESTAMP},
       valued = #{record.valued,jdbcType=BIT}
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -364,12 +334,9 @@
       <if test="updated != null">
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
-<<<<<<< HEAD
-=======
       <if test="valued != null">
         valued = #{valued,jdbcType=BIT},
       </if>
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -387,10 +354,7 @@
       pic2 = #{pic2,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
-<<<<<<< HEAD
-=======
       valued = #{valued,jdbcType=BIT},
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -404,12 +368,8 @@
       pic = #{pic,jdbcType=VARCHAR},
       pic2 = #{pic2,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
-<<<<<<< HEAD
-      updated = #{updated,jdbcType=TIMESTAMP}
-=======
       updated = #{updated,jdbcType=TIMESTAMP},
       valued = #{valued,jdbcType=BIT}
->>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
