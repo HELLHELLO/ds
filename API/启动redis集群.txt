@@ -1,0 +1,1 @@
+redis-cli --cluster create $host:7001 $host:7002 $host:7003 $host:7004 $host:7005 $host:7006 --cluster-replicas 1
