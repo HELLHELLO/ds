@@ -23,7 +23,9 @@ public class Content {
 
     private Date updated;
 
+
     private Boolean valued;
+
 
     private String content;
 
@@ -107,6 +109,7 @@ public class Content {
         this.updated = updated;
     }
 
+
     public Boolean getValued() {
         return valued;
     }
@@ -114,6 +117,7 @@ public class Content {
     public void setValued(Boolean valued) {
         this.valued = valued;
     }
+
 
     public String getContent() {
         return content;

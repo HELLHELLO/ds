@@ -765,6 +765,7 @@ public class ContentExample {
             return (Criteria) this;
         }
 
+
         public Criteria andValuedIsNull() {
             addCriterion("valued is null");
             return (Criteria) this;
@@ -824,6 +825,7 @@ public class ContentExample {
             addCriterion("valued not between", value1, value2, "valued");
             return (Criteria) this;
         }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

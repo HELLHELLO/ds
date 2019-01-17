@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ds.mapper.TraceMngMapper">
+  <resultMap id="BaseResultMap" type="ds.pojo.TraceMng">
+    <id column="mng_id" jdbcType="BIGINT" property="mngId" />
+    <result column="mng_name" jdbcType="VARCHAR" property="mngName" />
+    <result column="trace_id" jdbcType="BIGINT" property="traceId" />
+    <result column="item_cat_id" jdbcType="BIGINT" property="itemCatId" />
+    <result column="items_id" jdbcType="BIGINT" property="itemsId" />
+    <result column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="verifed" jdbcType="TINYINT" property="verifed" />
+    <result column="valued" jdbcType="BIT" property="valued" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ds.pojo.TraceMng">
+    <result column="data_" jdbcType="LONGVARCHAR" property="data" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mng_id, mng_name, trace_id, item_cat_id, items_id, item_id, shop_id, created, updated, 
+    verifed, valued
+  </sql>
+  <sql id="Blob_Column_List">
+    data_
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="ds.pojo.TraceMngExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from trace_mng
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="ds.pojo.TraceMngExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from trace_mng
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from trace_mng
+    where mng_id = #{mngId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from trace_mng
+    where mng_id = #{mngId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="ds.pojo.TraceMngExample">
+    delete from trace_mng
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ds.pojo.TraceMng">
+    <selectKey keyProperty="mngId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into trace_mng (mng_name, trace_id, item_cat_id, 
+      items_id, item_id, shop_id, 
+      created, updated, verifed, 
+      valued, data_)
+    values (#{mngName,jdbcType=VARCHAR}, #{traceId,jdbcType=BIGINT}, #{itemCatId,jdbcType=BIGINT}, 
+      #{itemsId,jdbcType=BIGINT}, #{itemId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{verifed,jdbcType=TINYINT}, 
+      #{valued,jdbcType=BIT}, #{data,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="ds.pojo.TraceMng">
+    <selectKey keyProperty="mngId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into trace_mng
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mngName != null">
+        mng_name,
+      </if>
+      <if test="traceId != null">
+        trace_id,
+      </if>
+      <if test="itemCatId != null">
+        item_cat_id,
+      </if>
+      <if test="itemsId != null">
+        items_id,
+      </if>
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="verifed != null">
+        verifed,
+      </if>
+      <if test="valued != null">
+        valued,
+      </if>
+      <if test="data != null">
+        data_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mngName != null">
+        #{mngName,jdbcType=VARCHAR},
+      </if>
+      <if test="traceId != null">
+        #{traceId,jdbcType=BIGINT},
+      </if>
+      <if test="itemCatId != null">
+        #{itemCatId,jdbcType=BIGINT},
+      </if>
+      <if test="itemsId != null">
+        #{itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifed != null">
+        #{verifed,jdbcType=TINYINT},
+      </if>
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ds.pojo.TraceMngExample" resultType="java.lang.Long">
+    select count(*) from trace_mng
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update trace_mng
+    <set>
+      <if test="record.mngId != null">
+        mng_id = #{record.mngId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mngName != null">
+        mng_name = #{record.mngName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.traceId != null">
+        trace_id = #{record.traceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemCatId != null">
+        item_cat_id = #{record.itemCatId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemsId != null">
+        items_id = #{record.itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemId != null">
+        item_id = #{record.itemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.verifed != null">
+        verifed = #{record.verifed,jdbcType=TINYINT},
+      </if>
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
+      </if>
+      <if test="record.data != null">
+        data_ = #{record.data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update trace_mng
+    set mng_id = #{record.mngId,jdbcType=BIGINT},
+      mng_name = #{record.mngName,jdbcType=VARCHAR},
+      trace_id = #{record.traceId,jdbcType=BIGINT},
+      item_cat_id = #{record.itemCatId,jdbcType=BIGINT},
+      items_id = #{record.itemsId,jdbcType=BIGINT},
+      item_id = #{record.itemId,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      verifed = #{record.verifed,jdbcType=TINYINT},
+      valued = #{record.valued,jdbcType=BIT},
+      data_ = #{record.data,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update trace_mng
+    set mng_id = #{record.mngId,jdbcType=BIGINT},
+      mng_name = #{record.mngName,jdbcType=VARCHAR},
+      trace_id = #{record.traceId,jdbcType=BIGINT},
+      item_cat_id = #{record.itemCatId,jdbcType=BIGINT},
+      items_id = #{record.itemsId,jdbcType=BIGINT},
+      item_id = #{record.itemId,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      verifed = #{record.verifed,jdbcType=TINYINT},
+      valued = #{record.valued,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ds.pojo.TraceMng">
+    update trace_mng
+    <set>
+      <if test="mngName != null">
+        mng_name = #{mngName,jdbcType=VARCHAR},
+      </if>
+      <if test="traceId != null">
+        trace_id = #{traceId,jdbcType=BIGINT},
+      </if>
+      <if test="itemCatId != null">
+        item_cat_id = #{itemCatId,jdbcType=BIGINT},
+      </if>
+      <if test="itemsId != null">
+        items_id = #{itemsId,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null">
+        item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifed != null">
+        verifed = #{verifed,jdbcType=TINYINT},
+      </if>
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
+      </if>
+      <if test="data != null">
+        data_ = #{data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where mng_id = #{mngId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="ds.pojo.TraceMng">
+    update trace_mng
+    set mng_name = #{mngName,jdbcType=VARCHAR},
+      trace_id = #{traceId,jdbcType=BIGINT},
+      item_cat_id = #{itemCatId,jdbcType=BIGINT},
+      items_id = #{itemsId,jdbcType=BIGINT},
+      item_id = #{itemId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      verifed = #{verifed,jdbcType=TINYINT},
+      valued = #{valued,jdbcType=BIT},
+      data_ = #{data,jdbcType=LONGVARCHAR}
+    where mng_id = #{mngId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ds.pojo.TraceMng">
+    update trace_mng
+    set mng_name = #{mngName,jdbcType=VARCHAR},
+      trace_id = #{traceId,jdbcType=BIGINT},
+      item_cat_id = #{itemCatId,jdbcType=BIGINT},
+      items_id = #{itemsId,jdbcType=BIGINT},
+      item_id = #{itemId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      verifed = #{verifed,jdbcType=TINYINT},
+      valued = #{valued,jdbcType=BIT}
+    where mng_id = #{mngId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -23,7 +23,9 @@ public class Content {
 
     private Date updated;
 
+
     private Boolean valued;
+
 
     private String content;
 
@@ -107,6 +109,8 @@ public class Content {
         this.updated = updated;
     }
 
+<<<<<<< HEAD
+=======
     public Boolean getValued() {
         return valued;
     }
@@ -115,6 +119,7 @@ public class Content {
         this.valued = valued;
     }
 
+>>>>>>> da6fbd9e66efff3275fdca6d753ee03285f1f881
     public String getContent() {
         return content;
     }
