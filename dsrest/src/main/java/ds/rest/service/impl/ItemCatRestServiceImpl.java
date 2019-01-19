@@ -4,7 +4,8 @@ import ds.common.pojo.CatTree;
 import ds.mapper.ItemCatMapper;
 import ds.pojo.ItemCat;
 import ds.pojo.ItemCatExample;
-import ds.rest.pojo.Result;
+
+import ds.common.pojo.Result;
 import ds.rest.service.ItemCatRestService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ds.common.pojo.Result;
 
 
 @Service

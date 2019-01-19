@@ -3,11 +3,10 @@ package ds.rest.service.impl;
 import ds.mapper.ContentMapper;
 import ds.pojo.Content;
 import ds.pojo.ContentExample;
-import ds.rest.pojo.Result;
 import ds.rest.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import ds.common.pojo.Result;
 import java.util.List;
 @Service
 public class ContentServiceImpl implements ContentService {

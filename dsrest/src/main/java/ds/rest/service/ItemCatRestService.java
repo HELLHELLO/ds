@@ -1,9 +1,7 @@
 package ds.rest.service;
 
 
-import ds.rest.pojo.Result;
-
-import java.util.Map;
+import ds.common.pojo.Result;
 
 public interface ItemCatRestService {
     public Result getItemCatList();

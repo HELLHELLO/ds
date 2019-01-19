@@ -1,6 +1,6 @@
 package ds.rest.controller;
 
-import ds.rest.pojo.Result;
+import ds.common.pojo.Result;
 import ds.rest.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
