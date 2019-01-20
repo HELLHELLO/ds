@@ -63,5 +63,7 @@
         <constructor-arg name="poolConfig" ref="JedisPoolConfig"/>
     </bean>
 
+    <bean id="jedisClientSingle" class="ds.rest.dao.Impl.JedisClientSingle"/>
+    <!--<bean id="jedisClientCluster" class="ds.rest.dao.Impl.JedisClientCluster"/> -->
 
 </beans>
