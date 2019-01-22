@@ -10,4 +10,5 @@ public interface ItemOpService {
     Map delItemByName(String name);
     //Map updateItem(Items items, Long itemsId);
     Map updateItem(Items items);
+    Map updateItemsDesc(String desc,Long ItemsId);
 }

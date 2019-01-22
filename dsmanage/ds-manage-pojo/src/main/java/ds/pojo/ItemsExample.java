@@ -355,6 +355,66 @@ public class ItemsExample {
             return (Criteria) this;
         }
 
+        public Criteria andItemDescIsNull() {
+            addCriterion("item_desc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescIsNotNull() {
+            addCriterion("item_desc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescEqualTo(Long value) {
+            addCriterion("item_desc =", value, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescNotEqualTo(Long value) {
+            addCriterion("item_desc <>", value, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescGreaterThan(Long value) {
+            addCriterion("item_desc >", value, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescGreaterThanOrEqualTo(Long value) {
+            addCriterion("item_desc >=", value, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescLessThan(Long value) {
+            addCriterion("item_desc <", value, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescLessThanOrEqualTo(Long value) {
+            addCriterion("item_desc <=", value, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescIn(List<Long> values) {
+            addCriterion("item_desc in", values, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescNotIn(List<Long> values) {
+            addCriterion("item_desc not in", values, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescBetween(Long value1, Long value2) {
+            addCriterion("item_desc between", value1, value2, "itemDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemDescNotBetween(Long value1, Long value2) {
+            addCriterion("item_desc not between", value1, value2, "itemDesc");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;

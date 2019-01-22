@@ -1,7 +1,10 @@
 package ds.service.impl;
 
+import ds.mapper.ItemsDescMapper;
 import ds.mapper.ItemsMapper;
 import ds.pojo.Items;
+import ds.pojo.ItemsDesc;
+import ds.pojo.ItemsDescExample;
 import ds.pojo.ItemsExample;
 import ds.service.ItemOpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import java.util.Map;
 public class ItemOpServicempl implements ItemOpService {
     @Autowired
     private ItemsMapper itemsMapper;
+    @Autowired
+    private ItemsDescMapper itemsDescMapper;
     @Override
     public Map addItem(Items items){
         Map result=new HashMap();
@@ -43,7 +48,15 @@ public class ItemOpServicempl implements ItemOpService {
             }
         }
         int res=itemsMapper.insertSelective(items);
-        if (res==0){
+
+        //生成一条空的商品描述用于以后进行商品描述的添加
+        ItemsDesc itemsDesc=new ItemsDesc();
+        itemsDesc.setItemId(items.getItemsId());
+        itemsDesc.setValued(true);
+        int res2=itemsDescMapper.insertSelective(itemsDesc);
+
+
+        if (res==0||res2==0){
             result.put("statu","failed");
             result.put("code","9");
             result.put("message","fail to insert");
@@ -63,7 +76,17 @@ public class ItemOpServicempl implements ItemOpService {
         Items items=new Items();
         items.setValued(false);
         int res=itemsMapper.updateByExampleSelective(items,itemsExample);
-        if (res==0){
+
+        //同步删除商品描述
+        ItemsDescExample itemsDescExample=new ItemsDescExample();
+        ItemsDescExample.Criteria descCriteria=itemsDescExample.createCriteria();
+        descCriteria.andItemIdEqualTo(itemsId);
+        ItemsDesc itemsDesc=new ItemsDesc();
+        itemsDesc.setValued(false);
+        int res2=itemsDescMapper.updateByExampleSelective(itemsDesc,itemsDescExample);
+
+
+        if (res==0||res2==0){
             result.put("statu","failed");
             result.put("code","1");
             result.put("message","fail to delete by id");
@@ -74,6 +97,8 @@ public class ItemOpServicempl implements ItemOpService {
         result.put("message","delete by id success");
         return result;
     }
+
+    //这个方法没有必要吧？
     @Override
     public Map delItemByName(String name){
         Map result=new HashMap();
@@ -110,6 +135,38 @@ public class ItemOpServicempl implements ItemOpService {
         criteria.andItemsIdEqualTo(items.getItemsId());
         criteria.andValuedEqualTo(true);
         int res=itemsMapper.updateByExampleSelective(items,itemsExample);
+        if (res==0){
+            result.put("statu","failed");
+            result.put("code","1");
+            result.put("message","fail to update");
+            return result;
+        }
+        result.put("statu","success");
+        result.put("code","0");
+        result.put("message","update success");
+        return result;
+    }
+
+    @Override
+    public Map updateItemsDesc(String desc, Long itemsId) {
+        Map result=new HashMap();
+
+        if (itemsId==null||desc==null){
+            result.put("statu","failed");
+            result.put("code","1");
+            result.put("message","missing param");
+            return result;
+        }
+
+        ItemsDescExample itemsDescExample=new ItemsDescExample();
+        ItemsDescExample.Criteria criteria=itemsDescExample.createCriteria();
+        criteria.andValuedEqualTo(true);
+        criteria.andItemIdEqualTo(itemsId);
+        ItemsDesc itemsDesc=new ItemsDesc();
+        itemsDesc.setItemId(itemsId);
+        itemsDesc.setItemDesc(desc);
+        int res=itemsDescMapper.updateByExampleSelective(itemsDesc,itemsDescExample);
+
         if (res==0){
             result.put("statu","failed");
             result.put("code","1");

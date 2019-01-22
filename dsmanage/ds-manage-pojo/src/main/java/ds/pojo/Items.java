@@ -11,6 +11,8 @@ public class Items {
 
     private String name;
 
+    private Long itemDesc;
+
     private Date created;
 
     private Date updated;
@@ -28,8 +30,6 @@ public class Items {
     private String image;
 
     private Boolean valued;
-
-    private String itemDesc;
 
     public Long getItemsId() {
         return itemsId;
@@ -61,6 +61,14 @@ public class Items {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Long getItemDesc() {
+        return itemDesc;
+    }
+
+    public void setItemDesc(Long itemDesc) {
+        this.itemDesc = itemDesc;
     }
 
     public Date getCreated() {
@@ -133,13 +141,5 @@ public class Items {
 
     public void setValued(Boolean valued) {
         this.valued = valued;
-    }
-
-    public String getItemDesc() {
-        return itemDesc;
-    }
-
-    public void setItemDesc(String itemDesc) {
-        this.itemDesc = itemDesc == null ? null : itemDesc.trim();
     }
 }

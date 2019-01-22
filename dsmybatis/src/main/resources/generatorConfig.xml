@@ -111,5 +111,14 @@
         <table tableName="content" schema="" domainObjectName="Content">
             <generatedKey column="id" sqlStatement="mysql" identity="true"/>
         </table>
+        <table tableName="ds_items_desc" schema="" domainObjectName="ItemsDesc">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_item_param" schema="" domainObjectName="ItemsParam">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="ds_item_param_item" schema="" domainObjectName="ItemsParamItem">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

@@ -5,10 +5,9 @@ import ds.pojo.Items;
 import ds.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/items")
@@ -23,10 +22,16 @@ public class ItemsController {
         return items;
     }
 
-    @RequestMapping("list")
+    @RequestMapping("/list")
     @ResponseBody
     public DataGridResult getItemsList(@RequestParam(defaultValue = "1") Long page,@RequestParam(defaultValue = "30") Long rows){
         DataGridResult dataGridResult=itemService.getItemsList(page,rows);
         return dataGridResult;
+    }
+
+    @RequestMapping(value = "/desc",method = RequestMethod.GET)
+    @ResponseBody
+    public Map getItemsDescByItemsId(@RequestParam(value = "id",required = false) Long id){
+        return itemService.getItemsDescByItemsId(id);
     }
 }

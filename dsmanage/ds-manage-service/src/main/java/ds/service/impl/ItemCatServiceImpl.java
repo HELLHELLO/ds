@@ -10,7 +10,9 @@ import ds.pojo.ItemPic;
 import ds.pojo.ItemPicExample;
 import ds.service.ItemCatService;
 import ds.service.PictureService;
+import ds.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +28,13 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private ItemPicMapper itemPicMapper;
+
+    @Value("${REST_BASE_ADDR}")
+    private String REST_BASE_ADDR;
+    @Value("${REDIS_SERVICE_ADDR}")
+    private String REDIS_SERVICE_ADDR;
+    @Value("${REDIS_CAT_ADDR}")
+    private String REDIS_CAT_ADDR;
 
     private static final int ROOTID=0;      //规定所有一级分类的父节点ID为0
 
@@ -110,6 +119,11 @@ public class ItemCatServiceImpl implements ItemCatService {
             }
         }
         int insertResult=itemCatMapper.insertSelective(itemCat);    //写入数据库
+        try {
+            HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CAT_ADDR);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         if (insertResult==0){
             result.put("statu","failed");
             result.put("code","2");
@@ -148,26 +162,24 @@ public class ItemCatServiceImpl implements ItemCatService {
 
         ItemCatExample itemCatExample=new ItemCatExample();
         itemCatExample.createCriteria().andCatIdEqualTo(itemCat.getCatId());
-        try{
-            int updateNum=itemCatMapper.updateByExampleSelective(itemCat,itemCatExample);
-            if(updateNum>0){
-                result.put("statu","success");
-                result.put("code","0");
-                result.put("message","modify success");
-                return result;
-            }else{
-                result.put("statu","failed");
-                result.put("code","2");
-                result.put("message","fail to update");
-                return result;
-            }
+        int updateNum=itemCatMapper.updateByExampleSelective(itemCat,itemCatExample);
+        try {
+            HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CAT_ADDR);
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        catch (Exception e){
+        if(updateNum>0){
+            result.put("statu","success");
+            result.put("code","0");
+            result.put("message","modify success");
+            return result;
+        }else{
             result.put("statu","failed");
             result.put("code","2");
             result.put("message","fail to update");
             return result;
         }
+
     }
 
     private boolean checkPic(ItemCat itemCat){
@@ -197,33 +209,29 @@ public class ItemCatServiceImpl implements ItemCatService {
         }
         ItemCat itemCat=new ItemCat();
         itemCat.setCatId(catId);
-        try{
-            ItemCatExample itemCatExample=new ItemCatExample();     //检查该分类是否存在
-            itemCatExample.createCriteria().andCatIdEqualTo(catId).andValuedEqualTo(true);//设置查询条件
-            long exist=itemCatMapper.countByExample(itemCatExample);
-            if (exist==0){                                          //若该分类不存在，报错
-                result.put("statu","failed");
-                result.put("code","5");
-                result.put("message","target does not exist");
-                return result;
-            }
-            this.deleteCats(catId);
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","delete success");
-            return result;
 
-
-        }catch (Exception e){
+        ItemCatExample itemCatExample=new ItemCatExample();     //检查该分类是否存在
+        itemCatExample.createCriteria().andCatIdEqualTo(catId).andValuedEqualTo(true);//设置查询条件
+        long exist=itemCatMapper.countByExample(itemCatExample);
+        if (exist==0){                                          //若该分类不存在，报错
             result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","something wrong");
-            result.put("detail",e.getMessage());
+            result.put("code","5");
+            result.put("message","target does not exist");
             return result;
         }
+        this.deleteCats(catId);
+        try {
+            HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CAT_ADDR);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        result.put("statu","success");
+        result.put("code","0");
+        result.put("message","delete success");
+        return result;
     }
 
-    public void deleteCats(Long catId) throws Exception{ //递归删除所有子分类
+    public void deleteCats(Long catId){ //递归删除所有子分类
         ItemCatExample itemCatExample=new ItemCatExample();
         itemCatExample.createCriteria().andParentIdEqualTo(catId).andValuedEqualTo(true);//设置查询条件
 

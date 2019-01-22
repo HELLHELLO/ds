@@ -4,7 +4,9 @@ import ds.mapper.ContentMapper;
 import ds.mapper.ItemPicMapper;
 import ds.pojo.*;
 import ds.service.ContentService;
+import ds.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +21,13 @@ public class ContentServiceImpl implements ContentService {
     private ContentMapper contentMapper;
     @Autowired
     private ItemPicMapper itemPicMapper;
+
+    @Value("${REST_BASE_ADDR}")
+    private String REST_BASE_ADDR;
+    @Value("${REDIS_SERVICE_ADDR}")
+    private String REDIS_SERVICE_ADDR;
+    @Value("${REDIS_CONTENT_ADDR}")
+    private String REDIS_CONTENT_ADDR;
 
     @Override
     public Map getContentList(Long id) {
@@ -58,6 +67,13 @@ public class ContentServiceImpl implements ContentService {
 
         content.setId(null);
         int num=contentMapper.insertSelective(content);
+        try {
+            HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CONTENT_ADDR + content.getCategoryId().toString());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
         if (num==0){
             result.put("statu","failed");
             result.put("code","2");
@@ -75,6 +91,11 @@ public class ContentServiceImpl implements ContentService {
     public Map updateContent(Content content) {
         Map result=new HashMap();
         int num=contentMapper.updateByPrimaryKeyWithBLOBs(content);
+        try {
+            HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CONTENT_ADDR + content.getCategoryId().toString());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         if (num==0){
             result.put("statu","failed");
             result.put("code","2");
@@ -124,6 +145,11 @@ public class ContentServiceImpl implements ContentService {
         result.put("statu","success");
         result.put("code","0");
         result.put("message","delete success");
+        try {
+            HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CONTENT_ADDR + content.getCategoryId().toString());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return result;
     }
 }

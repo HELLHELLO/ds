@@ -48,4 +48,14 @@ public class JedisClientCluster implements JedisClient {
     public Long expire(String key, Integer second) {
         return jedisCluster.expire(key,second);
     }
+
+    @Override
+    public Long del(String key) {
+        return jedisCluster.del(key);
+    }
+
+    @Override
+    public Long hdel(String hkey, String key) {
+        return jedisCluster.hdel(hkey,key);
+    }
 }
