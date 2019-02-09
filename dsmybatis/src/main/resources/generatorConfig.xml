@@ -102,9 +102,6 @@
         <table tableName="expert" schema="" domainObjectName="Expert" >
             <generatedKey column="expert" sqlStatement="mysql" identity="true"/>
         </table>
-        <table tableName="trace_mng" schema="" domainObjectName="TraceMng">
-            <generatedKey column="mng_id" sqlStatement="mysql" identity="true"/>
-        </table>
         <table tableName="content_category" schema="" domainObjectName="ContentCategory">
             <generatedKey column="id" sqlStatement="mysql" identity="true"/>
         </table>
@@ -119,6 +116,12 @@
         </table>
         <table tableName="ds_item_param_item" schema="" domainObjectName="ItemsParamItem">
             <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="trace_manager" schema="" domainObjectName="TraceManager">
+            <generatedKey column="mng_id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="trace_access" schema="" domainObjectName="TraceAccess">
+            <generatedKey column="trace_access_id" sqlStatement="mysql" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>
