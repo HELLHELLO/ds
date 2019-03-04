@@ -1,5 +1,6 @@
 package ds.service.impl;
 
+import ds.common.pojo.Result;
 import ds.mapper.ItemsParamMapper;
 import ds.pojo.ItemsParam;
 import ds.pojo.ItemsParamExample;
@@ -71,5 +72,20 @@ public class ItemParamServiceImpl implements ItemParamService {
         result.put("code","0");
         result.put("message","add success");
         return result;
+    }
+
+    @Override
+    public Result delItemParam(Long id) {
+        if (id==null){
+            return new Result(Result.Status.emptyParam,"empty id");
+        }
+        ItemsParam itemsParam=new ItemsParam();
+        itemsParam.setValued(false);
+        itemsParam.setId(id);
+        Integer num=itemsParamMapper.updateByPrimaryKeySelective(itemsParam);
+        if (num==0){
+            return new Result(Result.Status.somethingWrong,"the record is not exist");
+        }
+        return new Result(Result.Status.success,"success");
     }
 }
