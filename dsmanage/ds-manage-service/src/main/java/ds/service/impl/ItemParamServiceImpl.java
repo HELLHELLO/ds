@@ -18,13 +18,9 @@ public class ItemParamServiceImpl implements ItemParamService {
     private ItemsParamMapper itemsParamMapper;
 
     @Override
-    public Map getItemParamServiceByCatId(Long catId){
-        Map result=new HashMap();
+    public Result getItemParamServiceByCatId(Long catId){
         if (catId==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","missing id");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty cid");
         }
 
         ItemsParamExample itemsParamExample=new ItemsParamExample();
@@ -33,27 +29,15 @@ public class ItemParamServiceImpl implements ItemParamService {
         criteria.andCidEqualTo(catId);
         List<ItemsParam> list=itemsParamMapper.selectByExampleWithBLOBs(itemsParamExample);
         if(list.size()==0||list==null){
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","success,empty list");
-            result.put("list",null);
-            return result;
+            return new Result(Result.Status.success,"success but the list is empty",null);
         }
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","success");
-        result.put("list",list);
-        return result;
+        return new Result(Result.Status.success,"success",list);
     }
 
     @Override
-    public Map addItemParamServiceByCatId(Long catId, String paramData) {
-        Map result=new HashMap();
+    public Result addItemParamServiceByCatId(Long catId, String paramData) {
         if(catId==null||paramData==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","missing param");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty param");
         }
 
         ItemsParam itemsParam=new ItemsParam();
@@ -63,15 +47,9 @@ public class ItemParamServiceImpl implements ItemParamService {
 
         int res=itemsParamMapper.insertSelective(itemsParam);
         if(res==0){
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","insert failed");
-            return result;
+            return new Result(Result.Status.somethingWrong,"failed to insert");
         }
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","add success");
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ds.service.impl;
 
 import ds.common.pojo.CatTree;
+import ds.common.pojo.Result;
 import ds.mapper.ContentCategoryMapper;
 import ds.pojo.Content;
 import ds.pojo.ContentCategory;
@@ -22,14 +23,9 @@ public class ContentCategoryImpl implements ContentCategoryService {
     private static final int ROOTID=0;  //默认一级分类父分类id为0
 
     @Override
-    public Map getList() {
-        Map result=new HashMap();
+    public Result getList() {
         List<CatTree> list=getCatTreeByRootId(ROOTID);
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","get list success");
-        result.put("list",list);
-        return result;
+        return new Result(Result.Status.success,"success",list);
     }
 
     //根据根节点获取子节点的子树
@@ -62,8 +58,7 @@ public class ContentCategoryImpl implements ContentCategoryService {
     }
 
     @Override
-    public Map addCate(ContentCategory addCate) {
-        Map result=new HashMap();
+    public Result addCate(ContentCategory addCate) {
         addCate.setId(null);
         addCate.setIsParent(null);
         addCate.setCreated(null);
@@ -81,22 +76,13 @@ public class ContentCategoryImpl implements ContentCategoryService {
 
 
         if (addCate.getName()==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty name");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty name");
         }
         int num=contentCategoryMapper.insertSelective(addCate);
         if (num==0){
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","fail to insert");
-            return result;
+            return new Result(Result.Status.somethingWrong,"fail to insert");
         }
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","add success");
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 
 
@@ -130,44 +116,27 @@ public class ContentCategoryImpl implements ContentCategoryService {
     }
 
     @Override
-    public Map deleteCate(Long id) {
-        Map result=new HashMap();
+    public Result deleteCate(Long id) {
         if(id==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty id");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty id");
         }
         boolean success;
         success=delete(id);
         if (success){
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","delete success");
-            return result;
+            return new Result(Result.Status.success,"success");
         }else{
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","delete failed");
-            return result;
+            return new Result(Result.Status.somethingWrong,"fail to delete");
         }
     }
 
     @Override
-    public Map updateCate(String name,Long id) {
-        Map result=new HashMap();
+    public Result updateCate(String name,Long id) {
         //检测参数是否为空
         if (name==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty name");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty name");
         }
         if(id==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty id");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty id");
         }
 
         ContentCategory updateCate=new ContentCategory();
@@ -175,15 +144,9 @@ public class ContentCategoryImpl implements ContentCategoryService {
         updateCate.setName(name);
         int num=contentCategoryMapper.updateByPrimaryKeySelective(updateCate);
         if (num==0){
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","update failed");
-            return result;
+            return new Result(Result.Status.somethingWrong,"update failed");
         }else{
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","update success");
-            return result;
+            return new Result(Result.Status.success,"success");
         }
     }
 }

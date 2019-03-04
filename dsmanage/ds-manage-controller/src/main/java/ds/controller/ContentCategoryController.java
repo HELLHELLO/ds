@@ -1,5 +1,6 @@
 package ds.controller;
 
+import ds.common.pojo.Result;
 import ds.pojo.ContentCategory;
 import ds.service.ContentCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +21,25 @@ public class ContentCategoryController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Map getList(){
-        Map result=contentCategoryService.getList();
-        return result;
+    public Result getList(){
+        return contentCategoryService.getList();
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public Map addCate(ContentCategory addCate){
-        Map result=contentCategoryService.addCate(addCate);
-        return result;
+    public Result addCate(ContentCategory addCate){
+        return contentCategoryService.addCate(addCate);
     }
 
     @RequestMapping(value = "/delete",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public Map deleteCate(@RequestParam(value = "id",required = false) Long id){
-        Map result=contentCategoryService.deleteCate(id);
-        return result;
+    public Result deleteCate(@RequestParam(value = "id",required = false) Long id){
+        return contentCategoryService.deleteCate(id);
     }
 
     @RequestMapping(value = "/update",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public Map updateCate(@RequestParam(value = "id",required = false) Long id,@RequestParam(value="name",required = false) String name){
-        Map result=contentCategoryService.updateCate(name,id);
-        return result;
+    public Result updateCate(@RequestParam(value = "id",required = false) Long id,@RequestParam(value="name",required = false) String name){
+        return contentCategoryService.updateCate(name,id);
     }
 }

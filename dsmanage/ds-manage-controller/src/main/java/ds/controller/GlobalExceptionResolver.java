@@ -1,5 +1,6 @@
 package ds.controller;
 
+import ds.common.pojo.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,12 +13,7 @@ public class GlobalExceptionResolver {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public Map returnTheExceptionMessage(Exception e){
-        Map result=new HashMap();
-        result.put("statu","failed");
-        result.put("code","6");
-        result.put("message","something wrong");
-        result.put("detail",e.getMessage());
-        return result;
+    public Result returnTheExceptionMessage(Exception e){
+        return new Result(Result.Status.somethingWrong,e.getMessage());
     }
 }

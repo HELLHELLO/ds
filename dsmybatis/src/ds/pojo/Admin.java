@@ -7,6 +7,8 @@ public class Admin {
 
     private String adminPassword;
 
+    private Boolean valued;
+
     public Long getAdminId() {
         return adminId;
     }
@@ -29,5 +31,13 @@ public class Admin {
 
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword == null ? null : adminPassword.trim();
+    }
+
+    public Boolean getValued() {
+        return valued;
+    }
+
+    public void setValued(Boolean valued) {
+        this.valued = valued;
     }
 }

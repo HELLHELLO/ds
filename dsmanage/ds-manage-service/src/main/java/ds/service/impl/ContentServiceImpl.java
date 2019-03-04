@@ -1,5 +1,6 @@
 package ds.service.impl;
 
+import ds.common.pojo.Result;
 import ds.mapper.ContentMapper;
 import ds.mapper.ItemPicMapper;
 import ds.pojo.*;
@@ -30,14 +31,9 @@ public class ContentServiceImpl implements ContentService {
     private String REDIS_CONTENT_ADDR;
 
     @Override
-    public Map getContentList(Long id) {
-        Map result=new HashMap();
+    public Result getContentList(Long id) {
         if(id==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty id");
-            result.put("list",null);
-            return result;
+            return new Result(Result.Status.emptyParam,"empty id");
         }
 
         ContentExample contentExample=new ContentExample();
@@ -45,24 +41,15 @@ public class ContentServiceImpl implements ContentService {
         criteria.andValuedEqualTo(true);
         criteria.andCategoryIdEqualTo(id);
         List<Content> list=contentMapper.selectByExample(contentExample);
-
-        result.put("statu","failed");
-        result.put("code","1");
-        result.put("message","empty id");
-        result.put("list",list);
-        return result;
+        return new Result(Result.Status.success,"success",list);
 
     }
 
     @Override
-    public Map addContent(Content content) {
-        Map result=new HashMap();
+    public Result addContent(Content content) {
         //检查参数
         if(content.getCategoryId()==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty category id");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty  category id");
         }
 
         content.setId(null);
@@ -75,21 +62,17 @@ public class ContentServiceImpl implements ContentService {
 
 
         if (num==0){
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","fail to insert");
-            return result;
+            return new Result(Result.Status.somethingWrong,"fail to insert");
         }else{
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","add success");
-            return result;
+            return new Result(Result.Status.success,"success");
         }
     }
 
     @Override
-    public Map updateContent(Content content) {
-        Map result=new HashMap();
+    public Result updateContent(Content content) {
+        if (content.getId()==null){
+            return new Result(Result.Status.emptyParam,"empty id");
+        }
         int num=contentMapper.updateByPrimaryKeyWithBLOBs(content);
         try {
             HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CONTENT_ADDR + content.getCategoryId().toString());
@@ -97,26 +80,16 @@ public class ContentServiceImpl implements ContentService {
             e.printStackTrace();
         }
         if (num==0){
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","fail to insert");
-            return result;
+            return new Result(Result.Status.somethingWrong,"fail to insert");
         }else{
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","add success");
-            return result;
+            return new Result(Result.Status.success,"success");
         }
     }
 
     @Override
-    public Map delContent(Long id) {
-        Map result=new HashMap();
+    public Result delContent(Long id) {
         if (id==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty id");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty id");
         }
 
         //删除图片
@@ -142,14 +115,11 @@ public class ContentServiceImpl implements ContentService {
         content.setId(id);
 
         contentMapper.updateByPrimaryKeySelective(content);
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","delete success");
         try {
             HttpClientUtil.doGet(REST_BASE_ADDR + REDIS_SERVICE_ADDR + REDIS_CONTENT_ADDR + content.getCategoryId().toString());
         }catch(Exception e){
             e.printStackTrace();
         }
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 }

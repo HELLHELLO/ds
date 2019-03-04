@@ -2,6 +2,7 @@ package ds.service.impl;
 
 import com.alibaba.druid.sql.ast.expr.SQLCaseExpr;
 import ds.common.pojo.CatTree;
+import ds.common.pojo.Result;
 import ds.mapper.ItemCatMapper;
 import ds.mapper.ItemPicMapper;
 import ds.pojo.ItemCat;
@@ -39,9 +40,9 @@ public class ItemCatServiceImpl implements ItemCatService {
     private static final int ROOTID=0;      //规定所有一级分类的父节点ID为0
 
     @Override
-    public List<CatTree> getCatTree() {
+    public Result getCatTree() {
         List<CatTree> result=this.getCatTreeByRootId(ROOTID);   //查询由根节点开始的分类树
-        return result;
+        return new Result(Result.Status.success,"success",result);
     }
 
     /*
@@ -73,13 +74,9 @@ public class ItemCatServiceImpl implements ItemCatService {
     }
 
     @Override
-    public Map creatNewCat(ItemCat itemCat) {
-        Map result=new HashMap();
+    public Result creatNewCat(ItemCat itemCat) {
         if (itemCat.getName()==null){       //如果该分类没有命名，直接报错
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","empty name");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty name");
         }
         if ((itemCat.getParentId()==null)){   //如果未设定该分类的父分类，默认该分类为一级分类
             itemCat.setParentId((long)ROOTID);
@@ -95,10 +92,7 @@ public class ItemCatServiceImpl implements ItemCatService {
 
 
         if(!this.checkPic(itemCat)){
-            result.put("statu","failed");
-            result.put("code","4");
-            result.put("message","picture does not exist");
-            return result;
+            return new Result(Result.Status.somethingWrong,"picture does not exist");
 
         }
 
@@ -108,10 +102,7 @@ public class ItemCatServiceImpl implements ItemCatService {
             criteria.andCatIdEqualTo(itemCat.getParentId());    //设置查询条件
             long checkResult=itemCatMapper.countByExample(checkExample);    //获取查询结果条数
             if(checkResult==0){                         //若父分类不存在，报错
-                result.put("statu","failed");
-                result.put("code","3");
-                result.put("message","parentId does not exist");
-                return result;
+                return new Result(Result.Status.somethingWrong,"parentId does not exist");
             }else{
                 ItemCat parentCat=new ItemCat();       //设置父分类的isParent属性
                 parentCat.setIsParent(true);
@@ -125,19 +116,13 @@ public class ItemCatServiceImpl implements ItemCatService {
             e.printStackTrace();
         }
         if (insertResult==0){
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","fail to insert");
-            return result;
+            return new Result(Result.Status.somethingWrong,"fail to insert");
         }
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","add success");
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 
     @Override
-    public Map alterACatById(ItemCat itemCat) {
+    public Result alterACatById(ItemCat itemCat) {
         itemCat.setCreated(null);
         itemCat.setUpdated(null);
         itemCat.setValued(null);
@@ -145,19 +130,12 @@ public class ItemCatServiceImpl implements ItemCatService {
         itemCat.setIsParent(null);         //清空不允许修改的参数
         itemCat.setParentId(null);
 
-        Map result=new HashMap();
         if (itemCat.getCatId()==null){
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","missing catId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty catId");
         }
         boolean checkPicResult=checkPic(itemCat);
         if(!checkPicResult){                         //若图片不存在，报错
-            result.put("statu","failed");
-            result.put("code","4");
-            result.put("message","picture does not exist");
-            return result;
+            return new Result(Result.Status.somethingWrong,"picture does not exist");
         }
 
         ItemCatExample itemCatExample=new ItemCatExample();
@@ -169,15 +147,9 @@ public class ItemCatServiceImpl implements ItemCatService {
             e.printStackTrace();
         }
         if(updateNum>0){
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","modify success");
-            return result;
+            return new Result(Result.Status.success,"success");
         }else{
-            result.put("statu","failed");
-            result.put("code","2");
-            result.put("message","fail to update");
-            return result;
+            return new Result(Result.Status.somethingWrong,"fail to update");
         }
 
     }
@@ -199,13 +171,9 @@ public class ItemCatServiceImpl implements ItemCatService {
     }
 
     @Override
-    public Map deleteACatById(Long catId) {
-        Map result=new HashMap();
+    public Result deleteACatById(Long catId) {
         if (catId==null){
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","missing catId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty catId");
         }
         ItemCat itemCat=new ItemCat();
         itemCat.setCatId(catId);
@@ -214,10 +182,7 @@ public class ItemCatServiceImpl implements ItemCatService {
         itemCatExample.createCriteria().andCatIdEqualTo(catId).andValuedEqualTo(true);//设置查询条件
         long exist=itemCatMapper.countByExample(itemCatExample);
         if (exist==0){                                          //若该分类不存在，报错
-            result.put("statu","failed");
-            result.put("code","5");
-            result.put("message","target does not exist");
-            return result;
+            return new Result(Result.Status.somethingWrong,"target does not exist");
         }
         this.deleteCats(catId);
         try {
@@ -225,10 +190,7 @@ public class ItemCatServiceImpl implements ItemCatService {
         }catch(Exception e){
             e.printStackTrace();
         }
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","delete success");
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 
     public void deleteCats(Long catId){ //递归删除所有子分类

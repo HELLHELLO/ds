@@ -1,5 +1,6 @@
 package ds.service.impl;
 
+import ds.common.pojo.Result;
 import ds.mapper.ConsultItemMapper;
 import ds.mapper.ExpertMapper;
 import ds.pojo.ConsultItem;
@@ -23,25 +24,16 @@ public class ExpertServiceImpl implements ExpertService {
     private ConsultItemMapper consultItemMapper;
 
     @Override
-    public Map getExpertsList() {
-        Map result=new HashMap();
+    public Result getExpertsList() {
         ExpertExample expertExample=new ExpertExample();
         List<Expert> list=expertMapper.selectByExample(expertExample);
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","get list success");
-        result.put("list",list);
-        return result;
+        return new Result(Result.Status.success,"success",list);
     }
 
     @Override
-    public Map updateExpertById(Expert expert) {
-        Map result=new HashMap();
+    public Result updateExpertById(Expert expert) {
         if (expert.getExpert()==null){
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","missing ExpertId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty ExpertId");
         }
 
         //清空不能设置的字段
@@ -50,15 +42,11 @@ public class ExpertServiceImpl implements ExpertService {
 
         //更新数据库
         expertMapper.updateByPrimaryKeySelective(expert);
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","update success");
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 
     @Override
-    public Map searchExpert(Expert expert,Boolean priceUpper) {
-        Map result=new HashMap();
+    public Result searchExpert(Expert expert,Boolean priceUpper) {
         ExpertExample expertExample=new ExpertExample();
         ExpertExample.Criteria criteria=expertExample.createCriteria();
         criteria.andValuedEqualTo(true);
@@ -90,23 +78,13 @@ public class ExpertServiceImpl implements ExpertService {
 
         List<Expert> list=expertMapper.selectByExample(expertExample);
 
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","search success");
-        result.put("list",list);
-
-
-        return result;
+        return new Result(Result.Status.success,"success",list);
     }
 
     @Override
-    public Map deleteExpertById(Long id) {
-        Map result=new HashMap();
+    public Result deleteExpertById(Long id) {
         if (id==null){
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","missing ExpertId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty ExpertId");
         }
 
         //查询该专家是否仍有未完成的咨询单
@@ -115,20 +93,14 @@ public class ExpertServiceImpl implements ExpertService {
         Long num=consultItemMapper.countByExample(consultItemExample);
         //若有没完成的咨询单则不能删除
         if (num>0){
-            result.put("statu","failed");
-            result.put("code","8");
-            result.put("message","it has consult has not finished");
-            return result;
+            return new Result(Result.Status.somethingWrong,"it has consult has not finished");
         }else{
             //若没有未完成的咨询单，则删除
             Expert expert=new Expert();
             expert.setExpert(id);
             expert.setValued(false);
             expertMapper.updateByPrimaryKeySelective(expert);
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","delete success");
-            return result;
+            return new Result(Result.Status.success,"success");
         }
     }
 }

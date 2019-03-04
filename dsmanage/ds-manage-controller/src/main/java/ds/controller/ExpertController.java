@@ -1,5 +1,6 @@
 package ds.controller;
 
+import ds.common.pojo.Result;
 import ds.pojo.Expert;
 import ds.service.ExpertService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +21,25 @@ public class ExpertController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Map getExpertList(){
-        Map result=expertService.getExpertsList();
-        return result;
+    public Result getExpertList(){
+        return expertService.getExpertsList();
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public Map updateExpertById(Expert expert){
-        Map result=expertService.updateExpertById(expert);
-        return result;
+    public Result updateExpertById(Expert expert){
+        return expertService.updateExpertById(expert);
     }
 
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     @ResponseBody
-    public Map searchExpert(Expert expert,@RequestParam(value = "priceUpper",required = false) Boolean priceUpper){
-        Map result=expertService.searchExpert(expert,priceUpper);
-        return result;
+    public Result searchExpert(Expert expert,@RequestParam(value = "priceUpper",required = false) Boolean priceUpper){
+        return expertService.searchExpert(expert,priceUpper);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     @ResponseBody
-    public Map deleteExpertById(@RequestParam(value = "id") Long id){
-        Map result=expertService.deleteExpertById(id);
-        return result;
+    public Result deleteExpertById(@RequestParam(value = "id") Long id){
+        return expertService.deleteExpertById(id);
     }
 }

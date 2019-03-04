@@ -5,6 +5,7 @@
     <id column="admin_id" jdbcType="BIGINT" property="adminId" />
     <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
     <result column="admin_password" jdbcType="VARCHAR" property="adminPassword" />
+    <result column="valued" jdbcType="BIT" property="valued" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    admin_id, admin_name, admin_password
+    admin_id, admin_name, admin_password, valued
   </sql>
   <select id="selectByExample" parameterType="ds.pojo.AdminExample" resultMap="BaseResultMap">
     select
@@ -101,8 +102,10 @@
     <selectKey keyProperty="adminId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ds_admin (admin_name, admin_password)
-    values (#{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR})
+    insert into ds_admin (admin_name, admin_password, valued
+      )
+    values (#{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, #{valued,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="ds.pojo.Admin">
     <selectKey keyProperty="adminId" order="AFTER" resultType="java.lang.Long">
@@ -116,6 +119,9 @@
       <if test="adminPassword != null">
         admin_password,
       </if>
+      <if test="valued != null">
+        valued,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="adminName != null">
@@ -123,6 +129,9 @@
       </if>
       <if test="adminPassword != null">
         #{adminPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="valued != null">
+        #{valued,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -144,6 +153,9 @@
       <if test="record.adminPassword != null">
         admin_password = #{record.adminPassword,jdbcType=VARCHAR},
       </if>
+      <if test="record.valued != null">
+        valued = #{record.valued,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -153,7 +165,8 @@
     update ds_admin
     set admin_id = #{record.adminId,jdbcType=BIGINT},
       admin_name = #{record.adminName,jdbcType=VARCHAR},
-      admin_password = #{record.adminPassword,jdbcType=VARCHAR}
+      admin_password = #{record.adminPassword,jdbcType=VARCHAR},
+      valued = #{record.valued,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -167,13 +180,17 @@
       <if test="adminPassword != null">
         admin_password = #{adminPassword,jdbcType=VARCHAR},
       </if>
+      <if test="valued != null">
+        valued = #{valued,jdbcType=BIT},
+      </if>
     </set>
     where admin_id = #{adminId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="ds.pojo.Admin">
     update ds_admin
     set admin_name = #{adminName,jdbcType=VARCHAR},
-      admin_password = #{adminPassword,jdbcType=VARCHAR}
+      admin_password = #{adminPassword,jdbcType=VARCHAR},
+      valued = #{valued,jdbcType=BIT}
     where admin_id = #{adminId,jdbcType=BIGINT}
   </update>
 </mapper>

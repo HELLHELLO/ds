@@ -1,5 +1,6 @@
 package ds.controller;
 
+import ds.common.pojo.Result;
 import ds.pojo.Content;
 import ds.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,29 +22,25 @@ public class ContentController {
 
     @RequestMapping(value = "/list/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public Map getContentList(@PathVariable Long id){
-        Map result=contentService.getContentList(id);
-        return result;
+    public Result getContentList(@PathVariable Long id){
+        return contentService.getContentList(id);
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public Map addContent(Content content){
-        Map result=contentService.addContent(content);
-        return result;
+    public Result addContent(Content content){
+        return contentService.addContent(content);
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public Map updateContent(Content content){
-        Map result=contentService.updateContent(content);
-        return result;
+    public Result updateContent(Content content){
+        return contentService.updateContent(content);
     }
 
     @RequestMapping(value = "/del/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public Map delContentList(@PathVariable Long id){
-        Map result=contentService.delContent(id);
-        return result;
+    public Result delContentList(@PathVariable Long id){
+        return contentService.delContent(id);
     }
 }

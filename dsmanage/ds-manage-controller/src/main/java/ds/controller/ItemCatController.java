@@ -1,6 +1,7 @@
 package ds.controller;
 
 import ds.common.pojo.CatTree;
+import ds.common.pojo.Result;
 import ds.pojo.ItemCat;
 import ds.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,32 +26,28 @@ public class ItemCatController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public List<CatTree> getCatList(){
-        List<CatTree> result=itemCatService.getCatTree();
-        return result;
+    public Result getCatList(){
+        return itemCatService.getCatTree();
     }
 
 
     @RequestMapping(value = "/new",method = RequestMethod.POST)
     @ResponseBody
-    public Map creatNewCat(ItemCat itemCat){
-        Map result=itemCatService.creatNewCat(itemCat);
-        return result;
+    public Result creatNewCat(ItemCat itemCat){
+        return itemCatService.creatNewCat(itemCat);
     }
 
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public Map updateACatById(ItemCat itemCat){
-        Map result=itemCatService.alterACatById(itemCat);
-        return result;
+    public Result updateACatById(ItemCat itemCat){
+        return itemCatService.alterACatById(itemCat);
     }
 
     @RequestMapping(value = "/delete",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public Map deleteACatById(@RequestParam(value = "catId",required = false) Long catId){
-        Map result=itemCatService.deleteACatById(catId);
-        return result;
+    public Result deleteACatById(@RequestParam(value = "catId",required = false) Long catId){
+        return itemCatService.deleteACatById(catId);
     }
 
 }

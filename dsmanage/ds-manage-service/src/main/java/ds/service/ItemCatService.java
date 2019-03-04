@@ -1,6 +1,7 @@
 package ds.service;
 
 import ds.common.pojo.CatTree;
+import ds.common.pojo.Result;
 import ds.pojo.ItemCat;
 
 import java.util.List;
@@ -12,16 +13,16 @@ import java.util.Map;
  */
 public interface ItemCatService {
     //获取商品分类树
-    public List<CatTree> getCatTree();
-
+    //public List<CatTree> getCatTree();
+    public Result getCatTree();
     //创建一个新的分类
-    public Map creatNewCat(ItemCat itemCat);
+    public Result creatNewCat(ItemCat itemCat);
 
 
     //修改一个分类的信息
-    public Map alterACatById(ItemCat itemCat);
+    public Result alterACatById(ItemCat itemCat);
 
     //删除一个分类及其下的所有子分类
-    public Map deleteACatById(Long catId);
+    public Result deleteACatById(Long catId);
 
 }

@@ -303,6 +303,66 @@ public class AdminExample {
             addCriterion("admin_password not between", value1, value2, "adminPassword");
             return (Criteria) this;
         }
+
+        public Criteria andValuedIsNull() {
+            addCriterion("valued is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedIsNotNull() {
+            addCriterion("valued is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedEqualTo(Boolean value) {
+            addCriterion("valued =", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedNotEqualTo(Boolean value) {
+            addCriterion("valued <>", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedGreaterThan(Boolean value) {
+            addCriterion("valued >", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("valued >=", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedLessThan(Boolean value) {
+            addCriterion("valued <", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedLessThanOrEqualTo(Boolean value) {
+            addCriterion("valued <=", value, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedIn(List<Boolean> values) {
+            addCriterion("valued in", values, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedNotIn(List<Boolean> values) {
+            addCriterion("valued not in", values, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedBetween(Boolean value1, Boolean value2) {
+            addCriterion("valued between", value1, value2, "valued");
+            return (Criteria) this;
+        }
+
+        public Criteria andValuedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("valued not between", value1, value2, "valued");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

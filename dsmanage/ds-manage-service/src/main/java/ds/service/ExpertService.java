@@ -1,12 +1,13 @@
 package ds.service;
 
+import ds.common.pojo.Result;
 import ds.pojo.Expert;
 
 import java.util.Map;
 
 public interface ExpertService {
-    public Map getExpertsList();
-    public Map updateExpertById(Expert expert);
-    public Map searchExpert(Expert expert,Boolean priceUpper);
-    public Map deleteExpertById(Long id);
+    public Result getExpertsList();
+    public Result updateExpertById(Expert expert);
+    public Result searchExpert(Expert expert,Boolean priceUpper);
+    public Result deleteExpertById(Long id);
 }
