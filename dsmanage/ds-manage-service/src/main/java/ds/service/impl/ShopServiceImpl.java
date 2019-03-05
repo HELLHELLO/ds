@@ -1,5 +1,6 @@
 package ds.service.impl;
 
+import ds.common.pojo.Result;
 import ds.mapper.UserShopMapper;
 import ds.pojo.UserShop;
 import ds.pojo.UserShopExample;
@@ -18,18 +19,13 @@ public class ShopServiceImpl implements ShopService {
     private UserShopMapper userShopMapper;
 
     @Override
-    public Map getShopList() {
+    public Result getShopList() {
         List<UserShop> list=userShopMapper.selectByExample(new UserShopExample());
-        Map result=new HashMap();
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","get list success");
-        result.put("list",list);
-        return result;
+        return new Result(Result.Status.success,"success",list);
     }
 
     @Override
-    public Map searchShop(UserShop userShop,Boolean all) {
+    public Result searchShop(UserShop userShop,Boolean all) {
         UserShopExample userShopExample=new UserShopExample();
         UserShopExample.Criteria criteria=userShopExample.createCriteria();
         criteria.andValuedEqualTo(true);
@@ -73,27 +69,24 @@ public class ShopServiceImpl implements ShopService {
         result.put("message","get list success");
         result.put("list",list);
 
-        return result;
+        return new Result(Result.Status.success,"success",list);
     }
 
     @Override
-    public Map updateShop(Long id, String name, String head) {
+    public Result updateShop(Long id, String name, String head) {
         Map result=new HashMap();
         if (id==null){
             result.put("statu","failed");
             result.put("code","6");
             result.put("message","missing ShopId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty ShopId");
         }
         UserShopWithBLOBs userShop=new UserShopWithBLOBs();
         userShop.setShopId(id);
         userShop.setShopName(name);
         userShop.setShopHead(head);
         userShopMapper.updateByPrimaryKeySelective(userShop);
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","update success");
-        return result;
+        return new Result(Result.Status.success,"success");
     }
 
 

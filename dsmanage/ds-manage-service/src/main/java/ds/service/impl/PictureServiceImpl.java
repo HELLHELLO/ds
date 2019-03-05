@@ -1,5 +1,6 @@
 package ds.service.impl;
 
+import ds.common.pojo.Result;
 import ds.mapper.ItemPicMapper;
 import ds.pojo.ItemPic;
 import ds.service.PictureService;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 以后要加上一个上传者id的参数标识这个图片是谁上传的
@@ -38,8 +37,7 @@ public class PictureServiceImpl implements PictureService {
     private ItemPicMapper itemPicMapper;
 
     @Override
-    public Map upLoadPicture(MultipartFile picture){
-        Map resultMap=new HashMap();
+    public Result upLoadPicture(MultipartFile picture){
         //取原始文件名
         String oldName=picture.getOriginalFilename();
         //生成新文件名
@@ -49,21 +47,11 @@ public class PictureServiceImpl implements PictureService {
         try {
             boolean result=FtpUtil.uploadFile(ftpAdress, ftpPort, ftpUser, ftpPassword, ftpBasePath,imagePath, newName, picture.getInputStream());
             if (!result){   //上传失败
-                resultMap.put("statu","failed");
-                resultMap.put("code","1");
-                resultMap.put("message","upload failed");
-                resultMap.put("url","");
-                resultMap.put("picId","");
-                return resultMap;
+                return new Result(Result.Status.somethingWrong,"upload failed");
             }
         }
         catch (IOException ioError){    //上传文件流出现错误
-            resultMap.put("statu","failed");
-            resultMap.put("code","1");
-            resultMap.put("message","uploaded file wrong");
-            resultMap.put("url","");
-            resultMap.put("picId","");
-            return resultMap;
+            return new Result(Result.Status.somethingWrong,"uploaded file wrong");
         }
         String picUrl=pictureBaseUrl+imagePath+"/"+newName;
         //上传成功，信息写入数据库
@@ -73,21 +61,16 @@ public class PictureServiceImpl implements PictureService {
         itemPic.setPicUrl(picUrl);
         int insertResult=itemPicMapper.insertSelective(itemPic);
         if(insertResult==0){        //存入数据库失败，报错
-            resultMap.put("statu","failed");
-            resultMap.put("code","1");
-            resultMap.put("message","failed to insert to database");
-            resultMap.put("url","");
-            resultMap.put("picId","");
-            return resultMap;
+            return new Result(Result.Status.somethingWrong,"failed to insert to database");
         }
         Long picId=itemPic.getPicId();  //获取插入后的图片id
 
 
-        resultMap.put("statu","success");
-        resultMap.put("code","0");
-        resultMap.put("message","success");
+        Map resultMap=new HashMap();
         resultMap.put("url",pictureBaseUrl+imagePath+"/"+newName);
         resultMap.put("picId",picId.toString());
-        return resultMap;
+        List list=new ArrayList();
+        list.add(resultMap);
+        return new Result(Result.Status.success,"success",list);
     }
 }

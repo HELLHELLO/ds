@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import ds.common.pojo.DataGridResult;
+import ds.common.pojo.Result;
 import ds.mapper.*;
 import ds.pageHelperTools.GetSelectResult;
 import ds.pojo.*;
@@ -91,8 +92,7 @@ public class UserListServiceImpl implements UserListService {
 
     //可能有SQL注入，到时候检查一下
     @Override
-    public Map getUserByUserName(String name) {
-        Map result=new HashMap();
+    public Result getUserByUserName(String name) {
         UserExample userExample=new UserExample();
         UserExample.Criteria criteria=userExample.createCriteria();
         criteria.andUsernameLike(name);
@@ -104,17 +104,10 @@ public class UserListServiceImpl implements UserListService {
                 user.setPassword(null);
             }
 
-            result.put("statu","success");
-            result.put("code","0");
-            result.put("message","search success");
-            result.put("result",resultList);
-            return result;
+            return new Result(Result.Status.success,"success",resultList);
         }
         catch (Exception e){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","something wrong");
-            return result;
+            return new Result(Result.Status.somethingWrong,"something wrong");
         }
     }
 
@@ -122,13 +115,10 @@ public class UserListServiceImpl implements UserListService {
 
     //该方法未测试
     @Override
-    public Map updateUserById(User user) {
+    public Result updateUserById(User user) {
         Map result=new HashMap();
         if (user.getUserId()==null){    //如果未指定用户id，直接报错
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","missing userId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty userId");
         }
 
         try {
@@ -137,10 +127,7 @@ public class UserListServiceImpl implements UserListService {
             userExample.createCriteria().andValuedEqualTo(true).andUserIdEqualTo(user.getUserId());
             long exist = userMapper.countByExample(userExample);//若不存在则报错
             if (exist == 0) {
-                result.put("statu", "failed");
-                result.put("code", "5");
-                result.put("message", "user does not exist");
-                return result;
+                return new Result(Result.Status.somethingWrong,"user does not exist");
             }
             user.setPassword(null);     //禁止修改用户的用户名与密码
             user.setUsername(null);
@@ -149,51 +136,31 @@ public class UserListServiceImpl implements UserListService {
 
             int resultNum = userMapper.updateByExampleSelective(user, userExample);
             if (resultNum > 0) {
-                result.put("statu", "success");
-                result.put("code", "0");
-                result.put("message", "update success");
-                return result;
+                return new Result(Result.Status.success,"success");
             } else {
-                result.put("statu", "failed");
-                result.put("code", "2");
-                result.put("message", "failed to update");
-                return result;
+                return new Result(Result.Status.somethingWrong,"failed to update");
             }
 
         }
         catch (Exception e){
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","something wrong");
-            result.put("detail",e.getMessage());
-            return result;
+            return new Result(Result.Status.somethingWrong,e.getMessage());
         }
 
 
     }
 
     @Override
-    public Map deleteComuserUserById(Long id){
-        Map result=new HashMap();
+    public Result deleteComuserUserById(Long id){
         if (id==null){
-            result.put("statu","failed");
-            result.put("code","6");
-            result.put("message","missing userId");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty userId");
         }
 
             User user = userMapper.selectByPrimaryKey(id);
             if (user == null) {
-                result.put("statu", "failed");
-                result.put("code", "5");
-                result.put("message", "target does not exist");
-                return result;
+                return new Result(Result.Status.somethingWrong,"target dose not exist");
             }
             if (!user.getRole().equals("cosumer")) {
-                result.put("statu", "failed");
-                result.put("code", "7");
-                result.put("message", "the user is not a cosumer");
-                return result;
+                return new Result(Result.Status.somethingWrong,"the user is not a cosumer");
             }
 
 
@@ -208,10 +175,7 @@ public class UserListServiceImpl implements UserListService {
             criteria.andStatusNotIn(closed);        //设置查询未完成的订单
             long numOfNotFinishedOrder = orderMapper.countByExample(orderExample);
             if (numOfNotFinishedOrder != 0) {      //有未完成的订单，报错
-                result.put("statu", "failed");
-                result.put("code", "7");
-                result.put("message", "the comuser has order unfinsshed");
-                return result;
+                return new Result(Result.Status.somethingWrong,"the comuser has order unfinshed");
             }
 
             user.setValued(false);
@@ -260,10 +224,8 @@ public class UserListServiceImpl implements UserListService {
             cartMapper.updateByExampleSelective(cartDel,cartExample);
             userAddressMapper.updateByExampleSelective(userAddressDel,userAddressExample);
 
-            result.put("statu", "success");
-            result.put("code", "0");
-            result.put("message", "delete success");
-            return result;
+
+            return new Result(Result.Status.success,"success");
 
     }
 

@@ -1,6 +1,7 @@
 package ds.controller;
 
 import ds.common.pojo.DataGridResult;
+import ds.common.pojo.Result;
 import ds.pojo.Items;
 import ds.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,8 @@ public class ItemsController {
 
     @RequestMapping("/{itemsId}")
     @ResponseBody
-    public Items getItemsById(@PathVariable Long itemsId){
-        Items items=itemService.getItemsById(itemsId);
-        return items;
+    public Result getItemsById(@PathVariable Long itemsId){
+        return itemService.getItemsById(itemsId);
     }
 
     @RequestMapping("/list")
@@ -31,7 +31,7 @@ public class ItemsController {
 
     @RequestMapping(value = "/desc",method = RequestMethod.GET)
     @ResponseBody
-    public Map getItemsDescByItemsId(@RequestParam(value = "id",required = false) Long id){
+    public Result getItemsDescByItemsId(@RequestParam(value = "id",required = false) Long id){
         return itemService.getItemsDescByItemsId(id);
     }
 }

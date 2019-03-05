@@ -2,6 +2,7 @@ package ds.controller;
 
 import ds.common.pojo.DataGridResult;
 
+import ds.common.pojo.Result;
 import ds.pojo.User;
 
 import ds.service.UserListService;
@@ -36,23 +37,20 @@ public class UsersController {
 
     @RequestMapping("/name")
     @ResponseBody
-    public Map getUserByUserName(@RequestParam(value = "name",defaultValue = "") String name){
-        Map result=userListService.getUserByUserName(name);
-        return result;
+    public Result getUserByUserName(@RequestParam(value = "name",defaultValue = "") String name){
+        return userListService.getUserByUserName(name);
     }
 
     @RequestMapping("/update")
     @ResponseBody
-    public Map updateUserById(User user){
-        Map result=userListService.updateUserById(user);
-        return result;
+    public Result updateUserById(User user){
+        return userListService.updateUserById(user);
     }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Map deleteUserById(@RequestParam(value = "id") Long id){
-        Map result = userListService.deleteComuserUserById(id);
-        return result;
+    public Result deleteUserById(@RequestParam(value = "id") Long id){
+        return userListService.deleteComuserUserById(id);
     }
 
 }

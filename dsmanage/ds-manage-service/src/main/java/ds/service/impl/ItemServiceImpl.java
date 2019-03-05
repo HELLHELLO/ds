@@ -3,6 +3,7 @@ package ds.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import ds.common.pojo.DataGridResult;
+import ds.common.pojo.Result;
 import ds.mapper.ItemsDescMapper;
 import ds.mapper.ItemsMapper;
 import ds.pageHelperTools.GetSelectResult;
@@ -22,7 +23,7 @@ public class ItemServiceImpl implements ItemsService {
     @Autowired
     private ItemsDescMapper itemsDescMapper;
     @Override
-    public Items getItemsById(Long itemsId){
+    public Result getItemsById(Long itemsId){
         //itemsMapper.selectByPrimaryKey(itemsId);
         ItemsExample itemsExample=new ItemsExample();
         ItemsExample.Criteria criteria=itemsExample.createCriteria();
@@ -30,10 +31,9 @@ public class ItemServiceImpl implements ItemsService {
         criteria.andValuedEqualTo(true);
         List<Items> result=itemsMapper.selectByExample(itemsExample);
         if(result!=null&&result.size()>0){
-            Items items=result.get(0);
-            return items;
+            return new Result(Result.Status.success,"success",result);
         }
-        return null;
+        return new Result(Result.Status.somethingWrong,"the items do not exist");
     }
 
     @Override
@@ -53,13 +53,9 @@ public class ItemServiceImpl implements ItemsService {
     }
 
     @Override
-    public Map getItemsDescByItemsId(Long itemsId) {
-        Map result=new HashMap();
+    public Result getItemsDescByItemsId(Long itemsId) {
         if (itemsId==null){
-            result.put("statu","failed");
-            result.put("code","1");
-            result.put("message","missing id");
-            return result;
+            return new Result(Result.Status.emptyParam,"empty id");
         }
 
         ItemsDescExample itemsDescExample=new ItemsDescExample();
@@ -69,10 +65,6 @@ public class ItemServiceImpl implements ItemsService {
         ItemsDesc itemsDesc=itemsDescMapper.selectByExampleWithBLOBs(itemsDescExample).get(0);
         List<String> desc=new ArrayList<String>();
         desc.add(itemsDesc.getItemDesc());
-        result.put("statu","success");
-        result.put("code","0");
-        result.put("message","get desc success");
-        result.put("list",desc);
-        return result;
+        return new Result(Result.Status.success,"success",desc);
     }
 }

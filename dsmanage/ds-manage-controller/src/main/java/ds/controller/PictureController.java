@@ -1,5 +1,6 @@
 package ds.controller;
 
+import ds.common.pojo.Result;
 import ds.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,8 @@ public class PictureController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Map pictureUpload(@RequestParam(value = "uploadFile") MultipartFile picture){
-        Map result=pictureService.upLoadPicture(picture);
-        return result;
+    public Result pictureUpload(@RequestParam(value = "uploadFile") MultipartFile picture){
+        return pictureService.upLoadPicture(picture);
     }
 
 }

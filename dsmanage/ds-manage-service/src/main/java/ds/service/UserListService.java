@@ -2,6 +2,7 @@ package ds.service;
 
 import ds.common.pojo.DataGridResult;
 
+import ds.common.pojo.Result;
 import ds.pojo.User;
 
 
@@ -13,10 +14,10 @@ import java.util.Map;
  */
 public interface UserListService {
     DataGridResult getUserById(long page,long rows,long id);
-    Map getUserByUserName(String name);
+    Result getUserByUserName(String name);
     DataGridResult getUserList(long page,long rows);
 
-    Map updateUserById(User user);
-    Map deleteComuserUserById(Long id);
+    Result updateUserById(User user);
+    Result deleteComuserUserById(Long id);
 
 }
