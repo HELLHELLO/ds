@@ -32,6 +32,7 @@
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <redis.clients.version>3.0.1</redis.clients.version>
         <org.apache.solr.version>7.6.0</org.apache.solr.version>
+        <bouncycastle.version>1.61</bouncycastle.version>
     </properties>
 
     <dependencyManagement>
@@ -69,6 +70,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aspects</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
             </dependency>
 
             <!-- Mybatis -->
