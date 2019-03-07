@@ -17,7 +17,7 @@ public class AdminController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public Result addAdmin(Admin admin){
+    public Result addAdmin(Admin admin) throws Exception{
         return adminService.addAdmin(admin);
     }
 
@@ -29,7 +29,7 @@ public class AdminController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public Result updateAdmin(Admin admin){
+    public Result updateAdmin(Admin admin) throws Exception{
         return adminService.updateAdmin(admin);
     }
 
